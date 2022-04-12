@@ -8,14 +8,9 @@ class GameState : public State {
 public:
     using State::State;
     virtual void handleEvent(const sf::Event&){
-        // if()
     };
     virtual void update(const sf::Time&) {
-        if (catTurn) {
-            cat.move();
-        }
-        else {
-        }
+        
     };
     virtual void draw(sf::RenderTarget&) const {
 

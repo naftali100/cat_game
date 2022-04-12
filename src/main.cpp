@@ -5,6 +5,11 @@
 
 #include "Game.h"
 
+#include <concepts>
+
+template<typename T>
+#include <SFML/Graphics.hpp>
+
 int main() {
     // init plog
     plog::ColorConsoleAppender<plog::TxtFormatter> appiarer;
