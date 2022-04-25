@@ -7,7 +7,6 @@
 
 #include <concepts>
 
-template<typename T>
 #include <SFML/Graphics.hpp>
 
 int main() {

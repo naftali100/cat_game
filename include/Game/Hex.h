@@ -1,22 +1,22 @@
 #pragma once
-#ifndef NODE_H
-#define NODE_H
+#ifndef Hex_H
+#define Hex_H
 
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class Node : public sf::Transformable {
+class Hex : public sf::Transformable {
 public:
     int score() {
         return m_neighbors.size();
     };
 
-    void setParent(Node* parent) {
+    void setParent(Hex* parent) {
         m_BFSparent = parent;
     }
 
     void setVisited(bool visited) {
-        m_visited = visited;
+        m_BFSVisited = visited;
     }
 
     void draw(sf::RenderTarget& win) {
@@ -24,9 +24,9 @@ public:
     }
 
 private:
-    std::vector<Node*> m_neighbors;
-    Node* m_BFSparent = nullptr;
-    bool m_visited = false;
+    std::vector<Hex*> m_neighbors;
+    Hex* m_BFSparent = nullptr;
+    bool m_BFSVisited = false;
     bool m_blocked = false;
 
     sf::CircleShape m_shape{60, 6};
