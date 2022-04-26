@@ -9,6 +9,10 @@ enum Color{WHITE, GRAY, BLACK};
 
 class Hex : public sf::Transformable {
 public:
+    void setNeighbors(std::vector<Hex*> neighbors){
+        m_neighbors = neighbors;
+    }
+
     int score() {
         return m_neighbors.size();
     };
@@ -31,6 +35,10 @@ public:
 
     std::vector<Hex*> getNeighbors() const{
         return m_neighbors;
+    }
+    
+    sf::FloatRect getGlobalBounds(){
+        return m_shape.getGlobalBounds();
     }
 
 private:
