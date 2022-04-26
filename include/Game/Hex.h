@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+enum Color{WHITE, GRAY, BLACK};
+
 class Hex : public sf::Transformable {
 public:
     int score() {
@@ -15,18 +17,26 @@ public:
         m_BFSparent = parent;
     }
 
-    void setVisited(bool visited) {
-        m_BFSVisited = visited;
+    void setColor(Color color) {
+        m_BFSColor = color;
+    }
+
+    bool isVisited() const {
+        return m_BFSColor == GRAY || m_BFSColor == BLACK;
     }
 
     void draw(sf::RenderTarget& win) {
         win.draw(m_shape, getTransform());
     }
 
+    std::vector<Hex*> getNeighbors() const{
+        return m_neighbors;
+    }
+
 private:
     std::vector<Hex*> m_neighbors;
     Hex* m_BFSparent = nullptr;
-    bool m_BFSVisited = false;
+    Color m_BFSColor = WHITE;
     bool m_blocked = false;
 
     sf::CircleShape m_shape{60, 6};
