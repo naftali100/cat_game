@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(cmake-template)
+project(ex4)
 
 include(cmake/conf.txt)
 
