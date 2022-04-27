@@ -69,7 +69,6 @@ const sf::Color MidGray = Gray;
 
 // lights
 const sf::Color LightBlack(64, 64, 64);
-const sf::Color LightBlue(128, 128, 255);
 const sf::Color LightRed(255, 128, 128);
 const sf::Color LightMagenta(255, 128, 255);
 const sf::Color LightGreen(128, 255, 128);
@@ -108,6 +107,10 @@ const sf::Color DarkPeach(128, 64, 48);
 const sf::Color DarkLime(64, 128, 0);
 const sf::Color DarkMint(32, 128, 96);
 const sf::Color DarkGray(64, 64, 64);
+
+// very lights
+const sf::Color VeryLightPurple(128, 128, 255);
+
 
 // very darks
 const sf::Color VeryDarkBlue(0, 0, 64);
