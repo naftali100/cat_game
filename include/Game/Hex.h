@@ -5,8 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include "Log.h"
 #include "Colors.h"
+#include "Log.h"
 
 enum Color
 {
@@ -21,7 +21,7 @@ public:
         m_neighbors = neighbors;
     }
 
-    void addNeighnor(Hex* h){
+    void addNeighnor(Hex* h) {
         m_neighbors.push_back(h);
     }
 
@@ -41,20 +41,20 @@ public:
         return m_BFSColor == GRAY || m_BFSColor == BLACK;
     }
 
-    void block(){
+    void block() {
         m_blocked = true;
     }
 
-    void setColor(const sf::Color c){
-        if(m_color != Colors::Danger)
-        m_color = c;
+    void setColor(const sf::Color c) {
+        if (m_color != Colors::Danger)
+            m_color = c;
     }
 
     void draw(sf::RenderTarget& win) const {
-        auto color = m_blocked ? Colors::Danger : sf::Color::White;
+        auto color = m_blocked ? Colors::DarkGreen : Colors::LightGreen;
         sf::CircleShape s = m_shape;
         s.setFillColor(color);
-        s.setOutlineThickness(1);
+        // s.setOutlineThickness(1);
         s.setOutlineColor(sf::Color::Red);
         s.setPosition(getPosition());
         win.draw(s);
