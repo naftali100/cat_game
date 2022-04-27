@@ -12,11 +12,12 @@
 #include "Game/GameState.h"
 #include "SfmlUtil.h"
 #include "StateManager.h"
-#include "resource_identifiers.h"
+#include "Resources.h"
 
 Game::Game() : m_win(sf::VideoMode(WIN_SIZE_X, WIN_SIZE_Y), "World"), m_stateManager(m_win) {}
 
 void Game::loadResources() {
+    Resources::loadTexture(Textures::Cat, "textures/cat.png");
     TextureHolder::Instance().load(Textures::Player, "textures/player.png");
     FontHolder::Instance().load(Fonts::Main, FONT_PATH);
     SoundBufferHolder::Instance().load(SoundEffect::Main, "music/background.ogg");
@@ -85,7 +86,7 @@ void Game::showStatWin() {
 
 void Game::draw() {
     LOGV << "game render - start";
-    m_win.clear();
+    m_win.clear(sf::Color::White);
     m_stateManager.draw(m_win);
     // ImGui::SFML::Render(m_win);
     m_win.display();
