@@ -26,7 +26,9 @@ public:
 
     // StatePtr createState(States::ID);
 
-    sf::RenderWindow& getWin();
+    sf::RenderWindow& getWin() {
+        return m_win;
+    }
 
     void pause();
     void resume();
