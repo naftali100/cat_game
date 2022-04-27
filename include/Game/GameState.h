@@ -2,11 +2,11 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "Cat.h"
-#include "State.h"
 #include "Board.h"
-#include "Log.h"
+#include "Cat.h"
 #include "Colors.h"
+#include "Log.h"
+#include "State.h"
 
 class GameState : public State {
 public:
@@ -14,11 +14,11 @@ public:
     void init() {
         m_board.initLevel(11, 1);
     }
-    
-    virtual void handleEvent(const sf::Event& e){
-        if(e.type == sf::Event::MouseButtonReleased){
-            auto res = m_board.mousePositionToHex({(float)e.mouseButton.x, (float)e.mouseButton.y}); 
-            if(res != nullptr){
+
+    virtual void handleEvent(const sf::Event& e) {
+        if (e.type == sf::Event::MouseButtonReleased) {
+            auto res = m_board.mousePositionToHex({(float)e.mouseButton.x, (float)e.mouseButton.y});
+            if (res != nullptr) {
                 res->block();
                 // for(auto& i: res->getNeighbors()){
                 //     i->setColor(sf::Color::Green);
@@ -30,6 +30,7 @@ public:
     virtual void update(const sf::Time&){};
     virtual void draw(sf::RenderTarget& win) const override {
         m_board.draw(win);
+        m_cat.draw(win);
     };
 
     // invoke algorithem and find cat's next position
@@ -37,7 +38,7 @@ public:
 
 private:
     Cat m_cat;
-    Board m_originalBoard; // for reset level option
+    Board m_originalBoard;  // for reset level option
     Board m_board;
     bool m_PlayerTurn;
     int m_clickCount;
