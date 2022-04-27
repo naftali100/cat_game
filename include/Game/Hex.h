@@ -4,14 +4,25 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Log.h"
 
-enum Color{WHITE, GRAY, BLACK};
+#include "Log.h"
+#include "Colors.h"
+
+enum Color
+{
+    WHITE,
+    GRAY,
+    BLACK
+};
 
 class Hex : public sf::Transformable {
 public:
-    void setNeighbors(std::vector<Hex*> neighbors){
+    void setNeighbors(const std::vector<Hex*>& neighbors) {
         m_neighbors = neighbors;
+    }
+
+    void addNeighnor(Hex* h){
+        m_neighbors.push_back(h);
     }
 
     int score() {
@@ -30,18 +41,32 @@ public:
         return m_BFSColor == GRAY || m_BFSColor == BLACK;
     }
 
-    void draw(sf::RenderTarget& win) {
-        LOGI_ONCE << "here";
-        m_shape.setFillColor(sf::Color::White);
-        win.draw(m_shape, getTransform());
+    void block(){
+        m_blocked = true;
     }
 
-    std::vector<Hex*> getNeighbors() const{
+    void setColor(const sf::Color c){
+        if(m_color != Colors::Danger)
+        m_color = c;
+    }
+
+    void draw(sf::RenderTarget& win) const {
+        // auto color = m_blocked ? Colors::Brown : sf::Color::White;
+        sf::CircleShape s = m_shape;
+        s.setFillColor(m_color);
+        s.setOutlineThickness(1);
+        s.setOutlineColor(sf::Color::Red);
+        win.draw(s, getTransform());
+    }
+
+    std::vector<Hex*> getNeighbors() const {
         return m_neighbors;
     }
-    
-    sf::FloatRect getGlobalBounds(){
-        return m_shape.getGlobalBounds();
+
+    sf::FloatRect getGlobalBounds() const {
+        sf::CircleShape c = m_shape;
+        c.setPosition(getPosition());
+        return c.getGlobalBounds();
     }
 
 private:
@@ -49,8 +74,9 @@ private:
     Hex* m_BFSparent = nullptr;
     Color m_BFSColor = WHITE;
     bool m_blocked = false;
+    sf::Color m_color = sf::Color::White;
 
-    sf::CircleShape m_shape{60, 6};
+    sf::CircleShape m_shape{30, 6};
 };
 
 #endif

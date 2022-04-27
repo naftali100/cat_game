@@ -1,4 +1,5 @@
 #include "Game/Board.h"
+
 #include "Log.h"
 
 std::array<std::array<std::pair<int, int>, 6>, 2> arr{
@@ -9,7 +10,8 @@ std::array<std::array<std::pair<int, int>, 6>, 2> arr{
 
 sf::Vector2i oddr_offset_neighbor(int col, int row, int dir, int isEventRow) {
     auto diff = arr[isEventRow][dir];
-    return {col + diff.first, row + diff.second};
+    sf::Vector2i res{row + diff.second, col + diff.first};
+    return res;
 }
 
 sf::Vector2i Board::getHexIndex(Hex* h) {
@@ -26,42 +28,58 @@ sf::Vector2i Board::getHexIndex(Hex* h) {
     return {};
 }
 
-std::vector<Hex*> Board::getNeighbors(int col, int row) {
+std::vector<Hex*> Board::getNeighbors(int row, int col) {
     std::vector<Hex*> res;
     for (int i = 0; i < 6; i++) {
-        auto ni = oddr_offset_neighbor(col, row, i, row % 2);
-        res.push_back(&m_board[ni.x][ni.y]);
+        auto ni = oddr_offset_neighbor(col, row, i, row % 2 == 0);
+        // if (ni.x > 0 && ni.y > 0 && ni.x < m_board.size() && ni.y < m_board.at(ni.x).size())
+        try {
+            res.push_back(&m_board.at(ni.x).at(ni.y));
+        } catch (...) {}
     }
     return res;
 }
 
 void Board::initLevel(const int size, const int difficultLevel) {
-    sf::Vector2f pos{0, 0};
-    for (int i = 0; i < 11; i++) {
+    sf::Vector2f hexSize{Hex().getGlobalBounds().width, Hex().getGlobalBounds().height};
+    hexSize += {5, 5};
+
+    sf::Vector2f Startpos{100, 100};
+    sf::Vector2f pos = Startpos;
+
+    for (int i = 0; i < size; i++) {
         m_board.emplace_back();
-        for (int j = 0; j < 11; j++) {
-            m_board[i].emplace_back();
-            m_board[i].back().setPosition(pos);
-            pos.x += 10;  // TODO: get tile size
+        if (i % 2 != 0) {
+            pos.x += hexSize.x / 2;
         }
-        pos.y = 0;
+        for (int j = 0; j < size; j++) {
+            m_board.at(i).emplace_back();
+            m_board.at(i).back().setPosition(pos);
+            pos.x += hexSize.x;
+        }
+        pos.x = Startpos.x;
+        pos.y += (hexSize.y / 4) * 3;
     }
 
     int row = 0, col = 0;
-    for (auto vec : m_board) {
-        for (auto h : vec) {
+    for (auto& vec : m_board) {
+        for (auto& h : vec) {
             h.setNeighbors(getNeighbors(row, col));
+            if(row == 0 || row + 1 == size || col == 0 || col + 1 == size){
+                h.addNeighnor(&m_dest);
+            }
             col++;
         }
+        col = 0;
         row++;
     }
+
+    m_dest.setPosition(10,10);
 }
 
 void Board::draw(sf::RenderTarget& win) const {
-    for(auto vec: m_board){
-        for(auto hex: vec){
-            LOGI;
-            hex.draw(win);
-        }
+    for (auto& vec : m_board) {
+        for (auto& hex : vec) { hex.draw(win); }
     }
+    m_dest.draw(win);
 }
