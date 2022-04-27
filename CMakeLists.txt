@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(cmake-template)
 
-include(cmake/idk.txt)
+include(cmake/conf.txt)
 
 if (MSVC)
     add_executable (${PROJECT_NAME} WIN32)
