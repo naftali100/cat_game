@@ -6,16 +6,16 @@
 
 #include "Hex.h"
 
-class Board  {
+class Board {
 public:
     void initLevel(const int size, const int difficultLevel);
     void draw(sf::RenderTarget& target) const;
-        
+
     sf::Vector2i getHexIndex(Hex* h);
 
     std::vector<Hex*> getNeighbors(int col, int row);
-    
-     Hex* mousePositionToHex(const sf::Vector2f& pos) {
+
+    Hex* mousePositionToHex(const sf::Vector2f& pos) {
         for (auto& vec : m_board) {
             for (auto& hex : vec) {
                 auto v = sf::util::getGlobalCenter(hex) - pos;
@@ -27,8 +27,9 @@ public:
         return nullptr;
     }
 
-    Hex m_dest;
+
 private:
+    Hex m_dest;
     void init();
     std::vector<std::vector<Hex>> m_board;
 };

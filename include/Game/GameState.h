@@ -27,12 +27,7 @@ public:
             }
         }
     };
-    virtual void update(const sf::Time&){
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-            m_board.m_dest.setColor(Colors::Gray);
-        }
-
-    };
+    virtual void update(const sf::Time&){};
     virtual void draw(sf::RenderTarget& win) const override {
         m_board.draw(win);
     };

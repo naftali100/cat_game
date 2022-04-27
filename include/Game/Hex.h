@@ -33,7 +33,7 @@ public:
         m_BFSparent = parent;
     }
 
-    void setColor(Color color) {
+    void setBFSState(Color color) {
         m_BFSColor = color;
     }
 
@@ -53,7 +53,7 @@ public:
     void draw(sf::RenderTarget& win) const {
         auto color = m_blocked ? Colors::Danger : sf::Color::White;
         sf::CircleShape s = m_shape;
-        s.setFillColor(color);
+        s.setFillColor(m_color);
         s.setOutlineThickness(1);
         s.setOutlineColor(sf::Color::Red);
         s.setPosition(getPosition());

@@ -26,7 +26,7 @@ namespace BFS
     void search(Vertex* root, const Vertex* goal)
     {
         std::queue<Vertex*> q;
-        root->setColor(GRAY);
+        root->setBFSState(GRAY);
         root->setParent(nullptr);
         q.push(root);
         while (!q.empty())
@@ -36,13 +36,13 @@ namespace BFS
             {
                 if (!neighbor->isVisited())
                 {
-                    neighbor->setColor(GRAY);
+                    neighbor->setBFSState(GRAY);
                     neighbor->setParent(v);
                     q.push(neighbor);
                     if (neighbor == goal) return;
                 }
             }
-            v->setColor(BLACK);
+            v->setBFSState(BLACK);
         }
     }
 } // namespace BFS
