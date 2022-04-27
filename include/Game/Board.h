@@ -19,7 +19,7 @@ public:
         for (auto& vec : m_board) {
             for (auto& hex : vec) {
                 auto v = sf::util::getGlobalCenter(hex) - pos;
-                if (std::abs(v.x) < 30 && std::abs(v.y) < 30) {
+                if (std::abs(v.x) < 25 && std::abs(v.y) < 25) {
                     return &hex;
                 }
             }

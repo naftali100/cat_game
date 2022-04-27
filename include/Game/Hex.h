@@ -51,12 +51,13 @@ public:
     }
 
     void draw(sf::RenderTarget& win) const {
-        // auto color = m_blocked ? Colors::Brown : sf::Color::White;
+        auto color = m_blocked ? Colors::Danger : sf::Color::White;
         sf::CircleShape s = m_shape;
-        s.setFillColor(m_color);
+        s.setFillColor(color);
         s.setOutlineThickness(1);
         s.setOutlineColor(sf::Color::Red);
-        win.draw(s, getTransform());
+        s.setPosition(getPosition());
+        win.draw(s);
     }
 
     std::vector<Hex*> getNeighbors() const {

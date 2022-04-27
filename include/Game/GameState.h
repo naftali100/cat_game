@@ -19,11 +19,11 @@ public:
         if(e.type == sf::Event::MouseButtonReleased){
             auto res = m_board.mousePositionToHex({(float)e.mouseButton.x, (float)e.mouseButton.y}); 
             if(res != nullptr){
-                // res->block();
-                for(auto& i: res->getNeighbors()){
-                    i->setColor(sf::Color::Green);
-                }
-                res->setColor(Colors::Danger);
+                res->block();
+                // for(auto& i: res->getNeighbors()){
+                //     i->setColor(sf::Color::Green);
+                // }
+                // res->setColor(Colors::Danger);
             }
         }
     };
