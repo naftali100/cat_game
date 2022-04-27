@@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.22)
 
 project(cmake-template)
 
-add_executable(${PROJECT_NAME})
+include(cmake/idk.txt)
+
+if (MSVC)
+    add_executable (${PROJECT_NAME} WIN32)
+else()
+    add_executable (${PROJECT_NAME})
+endif()
 
 add_subdirectory(lib)
 add_subdirectory(include)
@@ -28,4 +34,7 @@ else()
     target_link_libraries (${PROJECT_NAME} sfml-graphics sfml-audio)
 endif()
 
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fuse-ld=lld -std=c++20")
+
+if (!MSVC)
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fuse-ld=lld -std=c++20")
+endif()
