@@ -38,3 +38,5 @@ endif()
 if (!MSVC)
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fuse-ld=lld -std=c++20")
 endif()
+
+target_link_libraries(${SOURCES_LIB}  plog)
