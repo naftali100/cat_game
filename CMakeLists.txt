@@ -15,6 +15,9 @@ add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(resources)
 
+target_link_libraries(${PROJECT_NAME} plog)
+
+# ======== SFML
 if( WIN32 ) 
     # dosnt work on linux from package manager (need to manualy compile dynamic lib)...
     set (SFML_STATIC_LIBRARIES TRUE)
@@ -33,10 +36,8 @@ else()
     set_target_properties (sfml-system sfml-window sfml-graphics sfml-audio sfml-network PROPERTIES MAP_IMPORTED_CONFIG_RELWITHDEBINFO RELEASE)
     target_link_libraries (${PROJECT_NAME} sfml-graphics sfml-audio)
 endif()
-
+# ==========
 
 if (!MSVC)
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fuse-ld=lld -std=c++20")
 endif()
-
-target_link_libraries(${PROJECT_NAME}  plog)
