@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Log.h"
 
 enum Color{WHITE, GRAY, BLACK};
 
@@ -30,6 +31,8 @@ public:
     }
 
     void draw(sf::RenderTarget& win) {
+        LOGI_ONCE << "here";
+        m_shape.setFillColor(sf::Color::White);
         win.draw(m_shape, getTransform());
     }
 

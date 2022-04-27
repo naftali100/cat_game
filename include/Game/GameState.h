@@ -5,18 +5,20 @@
 #include "Cat.h"
 #include "State.h"
 #include "Board.h"
+#include "Log.h"
 
 class GameState : public State {
 public:
     using State::State;
+    
     virtual void handleEvent(const sf::Event&){
 
     };
     virtual void update(const sf::Time&){
 
     };
-    virtual void draw(sf::RenderTarget&) const {
-
+    virtual void draw(sf::RenderTarget& win) const override {
+        m_board.draw(win);
     };
 
     // invoke algorithem and find cat's next position

@@ -9,6 +9,7 @@
 #include "Config.h"
 #include "States/ParticlesState.h"
 #include "States/DemoState.h"
+#include "Game/GameState.h"
 #include "SfmlUtil.h"
 #include "StateManager.h"
 #include "resource_identifiers.h"
@@ -30,7 +31,7 @@ void Game::run() {
     // m_win.setKeyRepeatEnabled(false);
 
     // initial state
-    m_stateManager.pushState(std::make_unique<DemoState>(m_stateManager));
+    m_stateManager.pushState(std::make_unique<GameState>(m_stateManager));
 
     sf::Clock clock;
     while (m_stateManager.isRunning()) {

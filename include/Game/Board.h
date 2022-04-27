@@ -6,19 +6,14 @@
 
 #include "Hex.h"
 
-// TODO:
-//
-//  : class drewable
-
-class Board : public sf::Drawable {
+class Board  {
 public:
-    Board(const int size, const int difficultLevel);
-    void initLevel();
-    void drew();
+    void initLevel(const int size, const int difficultLevel);
+    void draw(sf::RenderTarget& target) const;
+        
+    sf::Vector2i getHexIndex(Hex* h);
 
-    sf::Vector2f getHexIndex(Hex* h);
-
-    std::vector<Hex*> getNeighbors(int col, int row) {}
+    std::vector<Hex*> getNeighbors(int col, int row);
 
 private:
     void init();
