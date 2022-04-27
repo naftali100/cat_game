@@ -25,7 +25,8 @@ enum ID
 namespace Textures {
 enum ID
 {
-    Player
+    Player,
+    Cat
 };  // add textures here
 }  // namespace Textures
 
