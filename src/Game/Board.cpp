@@ -2,7 +2,7 @@
 
 #include "Log.h"
 #include <array>
-
+#include "Random.h"
 
 std::array<std::array<std::pair<int, int>, 6>, 2> arr{
     // odd
@@ -89,10 +89,10 @@ void Board::init(const int size, const int difficultLevel) {
         col = 0;
         row++;
     }
-
+Randomizer rnd;
     for (int i = 0; i < difficultLevel; i++) {
-        auto& vec = m_board.at(rand() % m_board.size());
-        vec.at(rand() % vec.size()).block();
+        auto& vec = m_board.at(rnd.rnd(0, m_board.size() -1));
+        vec.at(rnd.rnd(0, vec.size() -1 )).block();
     }
 }
 
