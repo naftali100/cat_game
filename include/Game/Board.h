@@ -8,24 +8,19 @@
 
 class Board {
 public:
+    // what is the diff betwin initLevel() and init()? this is public and the other is private
     void initLevel(const int size, const int difficultLevel);
     void draw(sf::RenderTarget& target) const;
 
-    sf::Vector2i getHexIndex(Hex* h);
+    sf::Vector2i getHexIndex(Hex* h) const;
 
+
+    // is this encapsulation violation?
+    // can we do better?
     std::vector<Hex*> getNeighbors(int col, int row);
 
-    Hex* mousePositionToHex(const sf::Vector2f& pos) {
-        for (auto& vec : m_board) {
-            for (auto& hex : vec) {
-                auto v = sf::util::getGlobalCenter(hex) - pos;
-                if (std::abs(v.x) < 25 && std::abs(v.y) < 25) {
-                    return &hex;
-                }
-            }
-        }
-        return nullptr;
-    }
+    //as above
+    Hex* mousePositionToHex(const sf::Vector2f& pos);
 
 
 private:

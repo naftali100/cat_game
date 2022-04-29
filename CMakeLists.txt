@@ -5,7 +5,7 @@ project(ex4)
 include(cmake/conf.txt)
 
 if (MSVC)
-    add_executable (${PROJECT_NAME} WIN32)
+    add_executable (${PROJECT_NAME})
 else()
     add_executable (${PROJECT_NAME})
 endif()
