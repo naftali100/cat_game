@@ -6,21 +6,18 @@
 
 #include "Resources.h"
 
-class Cat {
+class Cat : public sf::Transformable {
 public:
-    void setPosition(){
-
-    }
-
     void draw(sf::RenderTarget& win) const {
         sf::Sprite cat{Resources::getTexture(Textures::Cat)};
-        cat.scale(sf::Vector2f(0.1,0.1));
-        cat.setPosition(m_position);
+        cat.scale(sf::Vector2f(0.09,0.09));
+        // cat.setOrigin(sf::util::getGlobalCenter(cat));
+        cat.setPosition(getPosition() + sf::Vector2f(10,0));
         win.draw(cat);
     }
 private:
     sf::Sprite m_cat;
-    sf::Vector2f m_position;
+    // sf::Vector2f m_position;
 
 };
 
