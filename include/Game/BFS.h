@@ -8,7 +8,7 @@
 
 
 //TODO: replace this row after changing to template
-typedef Hex Vertex;
+//typedef Hex Vertex;
 
 
 /*
@@ -21,28 +21,28 @@ isVisited()
 */
 namespace BFS
 {
-    //template<typename Vertex>
+    template<typename Vertex>
     //assume it is initalised
     void search(Vertex* root, const Vertex* goal)
     {
         std::queue<Vertex*> q;
-        root->setBFSState(GRAY);
+        root->setInProgress();
         root->setParent(nullptr);
         q.push(root);
         while (!q.empty())
         {
-            Vertex* v = q.pop();
-            for (Vertex* neighbor : v.getNeighbors())
+            Vertex* v = q.back();
+            for (Vertex* neighbor : v->getNeighbors())
             {
                 if (!neighbor->isVisited())
                 {
-                    neighbor->setBFSState(GRAY);
+                    neighbor->setInProgress();
                     neighbor->setParent(v);
                     q.push(neighbor);
                     if (neighbor == goal) return;
                 }
             }
-            v->setBFSState(BLACK);
+            v->setDone();
         }
     }
 } // namespace BFS

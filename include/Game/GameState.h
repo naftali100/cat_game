@@ -3,6 +3,7 @@
 #define GAMESTATE_H
 
 #include "Board.h"
+#include "BFS.h"
 #include "Cat.h"
 #include "Colors.h"
 #include "Log.h"
@@ -47,6 +48,7 @@ public:
             // auto newCatPos = ... BFS() ?
 
             // check if there is where to go
+            // ASK: you can simply check the score of the hex, isn't it?
             bool isWon = true;
             for (auto correntHex : n) {
                 if (!correntHex->isBlocked()) {
@@ -60,13 +62,16 @@ public:
                 m_cat.setPosition(m_board.getMiddle()->getPosition());
                 return;
             }
-
+            //m_board.implementBFS();
+            auto newCatPos = m_board.implementBFS(catHex);
             // pick random neighbor
-            auto newCatPos = n.at(rand() % n.size());
-            while (newCatPos->isBlocked()) { 
-                newCatPos = n.at(rand() % n.size()); 
-            }
+            //auto newCatPos = n.at(rand() % n.size());
+            //while (newCatPos->isBlocked()) { 
+            //    newCatPos = n.at(rand() % n.size()); 
+            //}
             m_cat.setPosition(newCatPos->getPosition());
+
+
         }
         m_PlayerTurn = true;
     }

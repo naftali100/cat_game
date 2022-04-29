@@ -43,6 +43,16 @@ std::vector<Hex*> Board::getNeighbors(int row, int col) {
     return res;
 }
 
+void Board::initForBFS()
+{
+    for (auto& row : m_board)
+        for (auto& hex : row)
+        {
+            hex.initVisitedState();
+            hex.setParent(nullptr);
+        }
+}
+
 void Board::init(const int size, const int difficultLevel) {
     sf::Vector2f hexSize{ Hex().getGlobalBounds().width, Hex().getGlobalBounds().height };
     hexSize += {5, 5};

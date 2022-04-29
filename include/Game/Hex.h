@@ -8,11 +8,11 @@
 #include "Colors.h"
 #include "Log.h"
 
-enum Color
+enum class VisitedState
 {
-    WHITE,
-    GRAY,
-    BLACK
+    NOT_VISITED,
+    IN_PROGRESS,
+    DONE
 };
 
 // TODO: move SFML stuff away?
@@ -34,12 +34,31 @@ public:
         m_BFSparent = parent;
     }
 
-    void setBFSState(Color color) {
-        m_BFSColor = color;
+    Hex* getParent() {
+        return m_BFSparent;
     }
 
+    //void setBFSState(VisitedState state) {
+    //    m_BFSVisitedState = color;
+    //}
+    void setInProgress() {
+        m_BFSVisitedState = VisitedState::IN_PROGRESS;
+    }
+
+    void setDone() {
+        m_BFSVisitedState = VisitedState::DONE;
+    }
+
+    void initVisitedState() {
+        m_BFSVisitedState = VisitedState::NOT_VISITED;
+    }
+
+    //void initParentForBFS() {
+    //    m_BFSparent = nullptr;
+    //}
+
     bool isVisited() const {
-        return m_BFSColor == GRAY || m_BFSColor == BLACK;
+        return (m_BFSVisitedState == VisitedState::IN_PROGRESS || m_BFSVisitedState == VisitedState::DONE);
     }
 
     void block() {
@@ -78,7 +97,7 @@ public:
 private:
     std::vector<Hex*> m_neighbors;
     Hex* m_BFSparent = nullptr;
-    Color m_BFSColor = WHITE;
+    VisitedState m_BFSVisitedState = VisitedState::NOT_VISITED;
     bool m_blocked = false;
     sf::Color m_color = Colors::LightGreen;
 
