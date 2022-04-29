@@ -6,8 +6,7 @@ std::array<std::array<std::pair<int, int>, 6>, 2> arr{
     // odd
     std::array<std::pair<int, int>, 6>{std::pair{+1, 0}, {+1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
     // even
-    std::array<std::pair<int, int>, 6>{std::pair{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}}
-};
+    std::array<std::pair<int, int>, 6>{std::pair{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}}};
 
 sf::Vector2i oddr_offset_neighbor(int col, int row, int dir, int isEventRow) {
     auto diff = arr[isEventRow][dir];
@@ -41,7 +40,7 @@ std::vector<Hex*> Board::getNeighbors(int row, int col) {
     return res;
 }
 
-void Board::initLevel(const int size, const int difficultLevel) {
+void Board::init(const int size, const int difficultLevel) {
     sf::Vector2f hexSize{Hex().getGlobalBounds().width, Hex().getGlobalBounds().height};
     hexSize += {5, 5};
 
@@ -66,7 +65,7 @@ void Board::initLevel(const int size, const int difficultLevel) {
     for (auto& vec : m_board) {
         for (auto& h : vec) {
             h.setNeighbors(getNeighbors(row, col));
-            if(row == 0 || row + 1 == size || col == 0 || col + 1 == size){
+            if (row == 0 || row + 1 == size || col == 0 || col + 1 == size) {
                 h.addNeighnor(&m_dest);
             }
             col++;
@@ -75,12 +74,15 @@ void Board::initLevel(const int size, const int difficultLevel) {
         row++;
     }
 
-    m_dest.setPosition(10,10);
+    // TODO: pick random blocked tiles to start
+    for (int i = 0; i < difficultLevel; i++) {
+        auto& vec = m_board.at(rand() % m_board.size());
+        vec.at(rand() % vec.size()).block();
+    }
 }
 
 void Board::draw(sf::RenderTarget& win) const {
     for (auto& vec : m_board) {
         for (auto& hex : vec) { hex.draw(win); }
     }
-    m_dest.draw(win);
 }

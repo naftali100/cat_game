@@ -6,16 +6,23 @@
 
 #include "Hex.h"
 
+// logic - data structure
 class Board {
 public:
-    void initLevel(const int size, const int difficultLevel);
+    Board() {
+        init(11, 10);
+    }
+    Board(const int size, const int difficultLevel) {
+        init(size, difficultLevel);
+    }
+    void init(const int size, const int difficultLevel);
     void draw(sf::RenderTarget& target) const;
 
     sf::Vector2i getHexIndex(Hex* h);
 
     std::vector<Hex*> getNeighbors(int col, int row);
 
-    Hex* mousePositionToHex(const sf::Vector2f& pos) {
+    Hex* positionToHex(const sf::Vector2f& pos) {
         for (auto& vec : m_board) {
             for (auto& hex : vec) {
                 auto v = sf::util::getGlobalCenter(hex) - pos;
@@ -27,6 +34,10 @@ public:
         return nullptr;
     }
 
+    Hex* getMiddle() {
+        auto& vec = m_board.at(m_board.size() / 2);
+        return &vec.at(vec.size() / 2);
+    }
 
 private:
     Hex m_dest;
