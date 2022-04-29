@@ -46,7 +46,5 @@ namespace BFS
         }
     }
 } // namespace BFS
-//TODO: ask Matan: we need to do iteratable object or so?
-//do we need to do all in one function?
 
 #endif
