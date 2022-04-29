@@ -20,7 +20,7 @@ public:
         if (e.type == sf::Event::MouseButtonReleased) {
             if (m_PlayerTurn) {
                 auto res = m_board.positionToHex({(float)e.mouseButton.x, (float)e.mouseButton.y});
-                if (res != nullptr) {
+                if (res != nullptr && !res->isBlocked()) {
                     res->block();
                     m_PlayerTurn = false;
                     catMove();
