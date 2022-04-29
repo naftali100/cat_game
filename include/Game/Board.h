@@ -18,11 +18,8 @@ public:
     void init(const int size, const int difficultLevel);
     void draw(sf::RenderTarget& target) const;
 
-    sf::Vector2i getHexIndex(Hex* h) const;
+    sf::Vector2i getHexIndex(Hex* h);
 
-
-    // is this encapsulation violation?
-    // can we do better?
     std::vector<Hex*> getNeighbors(int col, int row);
 
     Hex* positionToHex(const sf::Vector2f& pos) {
