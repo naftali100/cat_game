@@ -68,6 +68,8 @@ void Game::processEvents() {
             case sf::Event::GainedFocus:
                 m_stateManager.resume();
                 break;
+            default:
+                break;
         }
     }
 }

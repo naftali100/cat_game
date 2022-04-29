@@ -2,13 +2,16 @@ cmake_minimum_required(VERSION 3.22)
 
 project(ex4)
 
-include(cmake/conf.txt)
-
 if (MSVC)
     add_executable (${PROJECT_NAME})
 else()
     add_executable (${PROJECT_NAME})
 endif()
+
+# Include cmake modules
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include(conf)
 
 add_subdirectory(lib)
 add_subdirectory(include)
@@ -38,6 +41,7 @@ else()
 endif()
 # ==========
 
-if (!MSVC)
+if (MSVC)
+else()
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fuse-ld=lld -std=c++20")
 endif()
