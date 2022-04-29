@@ -51,6 +51,8 @@ void Board::initForBFS()
             hex.initVisitedState();
             hex.setParent(nullptr);
         }
+    m_dest.initVisitedState();
+    m_dest.setParent(nullptr);
 }
 
 void Board::init(const int size, const int difficultLevel) {
@@ -74,6 +76,7 @@ void Board::init(const int size, const int difficultLevel) {
         pos.y += (hexSize.y / 4) * 3;
     }
 
+    // add dest as neighbor to all edge tile
     int row = 0, col = 0;
     for (auto& vec : m_board) {
         for (auto& h : vec) {
@@ -87,7 +90,6 @@ void Board::init(const int size, const int difficultLevel) {
         row++;
     }
 
-    // TODO: pick random blocked tiles to start
     for (int i = 0; i < difficultLevel; i++) {
         auto& vec = m_board.at(rand() % m_board.size());
         vec.at(rand() % vec.size()).block();
@@ -98,4 +100,5 @@ void Board::draw(sf::RenderTarget& win) const {
     for (auto& vec : m_board) {
         for (auto& hex : vec) { hex.draw(win); }
     }
+    m_dest.draw(win);
 }

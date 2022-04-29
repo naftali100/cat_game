@@ -58,7 +58,7 @@ public:
     //}
 
     bool isVisited() const {
-        return (m_BFSVisitedState == VisitedState::IN_PROGRESS || m_BFSVisitedState == VisitedState::DONE);
+        return m_BFSVisitedState != VisitedState::NOT_VISITED;
     }
 
     void block() {
@@ -82,6 +82,17 @@ public:
         s.setOutlineColor(sf::Color::Red);
         s.setPosition(getPosition());
         win.draw(s);
+
+        if(m_BFSparent != nullptr){
+            sf::VertexArray line (sf::Lines, 2);
+            line[0].position = sf::util::getGlobalCenter(*this);
+            line[1].position = sf::util::getGlobalCenter(*m_BFSparent);
+
+            line[0].color = Colors::Black;
+            line[1].color = Colors::LightOrange;
+
+            win.draw(line);
+        }
     }
 
     std::vector<Hex*> getNeighbors() const {

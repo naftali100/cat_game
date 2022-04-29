@@ -2,8 +2,8 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "Board.h"
 #include "BFS.h"
+#include "Board.h"
 #include "Cat.h"
 #include "Colors.h"
 #include "Log.h"
@@ -62,16 +62,19 @@ public:
                 m_cat.setPosition(m_board.getMiddle()->getPosition());
                 return;
             }
-            //m_board.implementBFS();
+            // m_board.implementBFS();
             auto newCatPos = m_board.implementBFS(catHex);
+            if (newCatPos == nullptr) {
+                LOGE << "can't find path (new pos found in nullptr)";
+            }
+            else {
+                m_cat.setPosition(newCatPos->getPosition());
+            }
             // pick random neighbor
-            //auto newCatPos = n.at(rand() % n.size());
-            //while (newCatPos->isBlocked()) { 
-            //    newCatPos = n.at(rand() % n.size()); 
+            // auto newCatPos = n.at(rand() % n.size());
+            // while (newCatPos->isBlocked()) {
+            //    newCatPos = n.at(rand() % n.size());
             //}
-            m_cat.setPosition(newCatPos->getPosition());
-
-
         }
         m_PlayerTurn = true;
     }
