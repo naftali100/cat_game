@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "Config.h"
-#include "States/ParticlesState.h"
 #include "States/DemoState.h"
 #include "Game/GameState.h"
 #include "SfmlUtil.h"
