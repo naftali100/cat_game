@@ -32,6 +32,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <exception>
+#include <concepts>
 
 template <typename T>
 concept hasGlobal = requires(T t) {
