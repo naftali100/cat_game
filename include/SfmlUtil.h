@@ -31,8 +31,10 @@
 #define SFMLUTIL_H
 
 #include <SFML/Graphics.hpp>
-#include <exception>
 #include <concepts>
+#include <exception>
+
+#if defined(__cpp_concepts) and defined(__cpp_lib_concepts)
 
 template <typename T>
 concept hasGlobal = requires(T t) {
@@ -119,5 +121,21 @@ namespace plog {
 }  // namespace plog
 
 #include "SfmlUtil.tpp"
+#else
+namespace sf {
+namespace util {
+template <typename T>
+inline sf::Vector2f getGlobalCenter(const T& object) {
+    const sf::FloatRect bounds{object.getGlobalBounds()};
+    return {bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f};
+}
+}  // namespace util
+}  // namespace sf
 
+namespace plog {
+inline Record& operator<<(Record& record, const sf::Vector2f& v) {
+    return record;
+}
+}  // namespace plog
+#endif
 #endif

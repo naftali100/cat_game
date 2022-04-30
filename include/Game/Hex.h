@@ -38,9 +38,9 @@ public:
         return m_BFSparent;
     }
 
-    //void setBFSState(VisitedState state) {
-    //    m_BFSVisitedState = color;
-    //}
+    // void setBFSState(VisitedState state) {
+    //     m_BFSVisitedState = color;
+    // }
     void setInProgress() {
         m_BFSVisitedState = VisitedState::IN_PROGRESS;
     }
@@ -53,9 +53,9 @@ public:
         m_BFSVisitedState = VisitedState::NOT_VISITED;
     }
 
-    //void initParentForBFS() {
-    //    m_BFSparent = nullptr;
-    //}
+    // void initParentForBFS() {
+    //     m_BFSparent = nullptr;
+    // }
 
     bool isVisited() const {
         return m_BFSVisitedState != VisitedState::NOT_VISITED;
@@ -65,7 +65,7 @@ public:
         m_blocked = true;
     }
 
-    bool isBlocked(){
+    bool isBlocked() {
         return m_blocked;
     }
 
@@ -83,8 +83,8 @@ public:
         s.setPosition(getPosition());
         win.draw(s);
 
-        if(m_BFSparent != nullptr){
-            sf::VertexArray line (sf::Lines, 2);
+        if (m_BFSparent != nullptr) {
+            sf::VertexArray line(sf::Lines, 2);
             line[0].position = sf::util::getGlobalCenter(*this);
             line[1].position = sf::util::getGlobalCenter(*m_BFSparent);
 
