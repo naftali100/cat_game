@@ -45,4 +45,5 @@ jobs:
 
     - name: MSBuild
       working-directory: ${{github.workspace}}/build
-      run: msbuild /m ex4.sln
+      run: cmake --build .
+      # run: msbuild /m ex4.sln
