@@ -29,7 +29,7 @@ jobs:
         git submodule update --remote --recursive
 
     - name: Install dependencies on windows
-      if: startsWith(matrix.config.os, 'windows')
+      if: runner.os == 'windows'
       run: |
         choco install ninja cmake
         ninja --version
