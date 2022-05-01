@@ -31,7 +31,7 @@ jobs:
 
     - name: download and extract SFML
       run: |
-        wget https://www.sfml-dev.org/files/SFML-2.5.1-windows-vc15-64-bit.zip  -UseBasicParsing -Outfile sfml.zip
+        Invoke-WebRequest https://www.sfml-dev.org/files/SFML-2.5.1-windows-vc15-64-bit.zip -Outfile sfml.zip -UseBasicParsing
         Expand-Archive -LiteralPath "sfml.zip"  -DestinationPath C:/SFML/
  
     - name: Configure CMake
