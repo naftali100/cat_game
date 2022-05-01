@@ -34,7 +34,7 @@
 #include <concepts>
 #include <exception>
 
-#if __cpp_concepts < __cplusplus && __cpp_lib_concepts <= __cplusplus
+#if __cpp_concepts <= __cplusplus && __cpp_lib_concepts <= __cplusplus
 
 template <typename T>
 concept hasGlobal = requires(T t) {
