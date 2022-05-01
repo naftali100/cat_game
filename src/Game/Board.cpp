@@ -56,6 +56,17 @@ void Board::initForBFS()
     m_dest.setParent(nullptr);
 }
 
+void Board::initForUCS()
+{
+    for (auto& row : m_board)
+        for (auto& hex : row)
+        {
+            hex.setCostSoFar(0);
+            hex.setParent(nullptr);
+        }
+    m_dest.setParent(nullptr);
+}
+
 void Board::init(const int size, const int difficultLevel) {
     sf::Vector2f hexSize{ Hex().getGlobalBounds().width, Hex().getGlobalBounds().height };
     hexSize += {5, 5};

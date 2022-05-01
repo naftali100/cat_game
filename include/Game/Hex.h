@@ -8,16 +8,23 @@
 #include "Colors.h"
 #include "Log.h"
 
-enum class VisitedState
-{
-    NOT_VISITED,
-    IN_PROGRESS,
-    DONE
-};
+
 
 // TODO: move SFML stuff away?
 class Hex : public sf::Transformable {
 public:
+
+    enum class VisitedState
+    {
+        NOT_VISITED,
+        IN_PROGRESS,
+        DONE
+    };
+
+    void setCostSoFar(const unsigned int cost) {
+        m_costSoFar = cost;
+    }
+
     void setNeighbors(const std::vector<Hex*>& neighbors) {
         m_neighbors = neighbors;
     }
@@ -26,9 +33,9 @@ public:
         m_neighbors.push_back(h);
     }
 
-    int score() {
-        return m_neighbors.size();
-    };
+    //int score() {
+    //    return m_neighbors.size();
+    //};
 
     void setParent(Hex* parent) {
         m_BFSparent = parent;
@@ -59,6 +66,10 @@ public:
 
     bool isVisited() const {
         return m_BFSVisitedState != VisitedState::NOT_VISITED;
+    }
+
+    unsigned int costSoFar() {
+        return m_costSoFar;
     }
 
     void block() {
@@ -105,14 +116,25 @@ public:
         return c.getGlobalBounds();
     }
 
+    unsigned int cost() {
+        unsigned int counter = 0;
+        for (auto next : getNeighbors())
+            if (next->isBlocked())
+                counter++;
+        //TODO: check what is whith m_dest
+        return counter;
+    }
+
 private:
     std::vector<Hex*> m_neighbors;
     Hex* m_BFSparent = nullptr;
+    unsigned int m_costSoFar = 0;
     VisitedState m_BFSVisitedState = VisitedState::NOT_VISITED;
     bool m_blocked = false;
     sf::Color m_color = Colors::LightGreen;
 
     sf::CircleShape m_shape{30, 6};
+
 };
 
 #endif

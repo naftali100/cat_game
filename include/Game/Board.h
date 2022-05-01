@@ -6,6 +6,7 @@
 
 #include "Hex.h"
 #include "BFS.h"
+#include "UniformCostSearch.h"
 
 // logic - data structure
 class Board {
@@ -43,6 +44,12 @@ public:
         return findNextInPathToDest(root);
     }
 
+    Hex* implementUCS(Hex* root) {
+        initForUCS();
+        UniformCostSearch::UCS(root, &m_dest);
+        return findNextInPathToDest(root);
+    }
+
     //return nullptr if there is no path
     Hex* findNextInPathToDest(const Hex* root) {
         Hex* temp = &m_dest;
@@ -61,6 +68,7 @@ private:
     Hex m_dest; //the out of the board
     void init();
     void initForBFS();          //init the state of the Hexes
+    void initForUCS();          //init the state of the Hexes
     std::vector<std::vector<Hex>> m_board;
 };
 
