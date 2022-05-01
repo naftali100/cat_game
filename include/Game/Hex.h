@@ -33,9 +33,16 @@ public:
         m_neighbors.push_back(h);
     }
 
-    //int score() {
-    //    return m_neighbors.size();
-    //};
+    int score() {
+        int res = 0;
+        for(auto n: m_neighbors){
+            res += !n->isBlocked();
+        }
+        return res;
+
+        // after we implement remove blocked neighbors from neighbors list
+        // return m_neighbors.size();
+    };
 
     void setParent(Hex* parent) {
         m_BFSparent = parent;
@@ -74,6 +81,7 @@ public:
 
     void block() {
         m_blocked = true;
+        // TODO: remove me from my neighbors (idk how)...
     }
 
     bool isBlocked() {

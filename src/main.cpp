@@ -4,9 +4,6 @@
 #include <plog/Log.h>
 
 #include "Game.h"
-
-#include <concepts>
-
 #include <SFML/Graphics.hpp>
 
 int main() {

@@ -103,8 +103,12 @@ void Board::init(const int size, const int difficultLevel) {
     }
     Randomizer rnd;
     for (int i = 0; i < difficultLevel; i++) {
-        auto& vec = m_board.at(rnd.rnd(0, m_board.size() -1));
-        vec.at(rnd.rnd(0, vec.size() -1 )).block();
+        auto& vec = m_board.at(rnd.rnd(0, m_board.size() - 1));
+        auto& toBlock = vec.at(rnd.rnd(0, vec.size() - 1));
+        if (&toBlock != getMiddle())
+            toBlock.block();
+        else
+            i--;
     }
 }
 

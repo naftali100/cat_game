@@ -18,7 +18,11 @@ public:
     Board(const int size, const int difficultLevel) {
         init(size, difficultLevel);
     }
-    void init(const int size, const int difficultLevel);
+
+    void reset() {
+        m_board.clear();
+        init(11, 10);
+    }
     void draw(sf::RenderTarget& target) const;
 
     sf::Vector2i getHexIndex(Hex* h);
@@ -66,7 +70,7 @@ public:
 
 private:
     Hex m_dest; //the out of the board
-    void init();
+    void init(const int size, const int difficultLevel);
     void initForBFS();          //init the state of the Hexes
     void initForUCS();          //init the state of the Hexes
     std::vector<std::vector<Hex>> m_board;
