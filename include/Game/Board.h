@@ -43,6 +43,7 @@ public:
         return findNextInPathToDest(root);
     }
 
+    //return nullptr if there is no path
     Hex* findNextInPathToDest(const Hex* root) {
         LOGI;
         //TODO: catch exceptions
@@ -60,10 +61,17 @@ public:
     }
 
 private:
-    Hex m_dest;
+    Hex m_dest; //the out of the board
     void init();
     void initForBFS();          //init the state of the Hexes
     std::vector<std::vector<Hex>> m_board;
 };
 
 #endif
+
+//template<class T>
+//class graph {
+//    graph(int size) {
+//        std::vector<std::vector<T>> graph;
+//    }
+//};

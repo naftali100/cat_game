@@ -1,0 +1,3 @@
+cat animation
+finish of level
+restart of level
