@@ -31,12 +31,9 @@
 #define SFMLUTIL_H
 
 #include <SFML/Graphics.hpp>
-#if __has_include("concepts")
-    #include <concepts>
-#endif
 #include <exception>
-
-#if __cpp_concepts <= __cplusplus && __cpp_lib_concepts <= __cplusplus
+#if __has_include("concepts") && __cpp_concepts <= __cplusplus && __cpp_lib_concepts <= __cplusplus
+#include <concepts>
 
 template <typename T>
 concept hasGlobal = requires(T t) {
