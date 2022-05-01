@@ -32,7 +32,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <exception>
-#if __has_include("concepts") && __cpp_concepts <= __cplusplus && __cpp_lib_concepts <= __cplusplus
+
+#if __has_include("concepts") && __cpp_concepts <= __cplusplus && __cpp_lib_concepts <= __cplusplus && !_MSC_VER
+    #define has_concepts
+#endif
+
+#ifdef has_concepts
 #include <concepts>
 
 template <typename T>
@@ -136,5 +141,6 @@ inline Record& operator<<(Record& record, const sf::Vector2f& v) {
     return record;
 }
 }  // namespace plog
-#endif
-#endif
+#endif // check for concepts
+
+#endif // include guards
