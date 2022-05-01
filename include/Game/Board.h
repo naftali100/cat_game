@@ -17,7 +17,11 @@ public:
     Board(const int size, const int difficultLevel) {
         init(size, difficultLevel);
     }
-    
+
+    void reset() {
+        m_board.clear();
+        init(11, 10);
+    }
     void draw(sf::RenderTarget& target) const;
 
     sf::Vector2i getHexIndex(Hex* h);

@@ -25,7 +25,7 @@ public:
                     res->block();
                     m_PlayerTurn = false;
                     catMove();
-                    // push step to undo stack
+                    // TODO: push step to undo stack
                 }
             }
         }
@@ -44,25 +44,15 @@ public:
             for (auto correntHex : n) {
                 // if correntHex == board.m_dest -> gameover
             }
-            // replace with algorithem
-            // auto newCatPos = ... BFS() ?
 
-            // check if there is where to go
-            // ASK: you can simply check the score of the hex, isn't it?
-            bool isWon = true;
-            for (auto correntHex : n) {
-                if (!correntHex->isBlocked()) {
-                    isWon = false;
-                    break;
-                }
-            }
+            bool isWon = catHex->score() == 0; // cat have no where to go
             if (isWon) {
-                m_board = Board();
+                m_board.reset();
                 m_PlayerTurn = true;
                 m_cat.setPosition(m_board.getMiddle()->getPosition());
                 return;
             }
-            // m_board.implementBFS();
+
             auto newCatPos = m_board.implementBFS(catHex);
             if (newCatPos == nullptr) {
                 //TODO: do secondary strategy
@@ -71,11 +61,6 @@ public:
             else {
                 m_cat.setPosition(newCatPos->getPosition());
             }
-            // pick random neighbor
-            // auto newCatPos = n.at(rand() % n.size());
-            // while (newCatPos->isBlocked()) {
-            //    newCatPos = n.at(rand() % n.size());
-            //}
         }
         m_PlayerTurn = true;
     }
