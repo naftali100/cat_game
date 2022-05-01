@@ -34,6 +34,7 @@ public:
     virtual void draw(sf::RenderTarget& win) const override {
         m_board.draw(win);
         m_cat.draw(win);
+        LOGI << sf::RectangleShape();
     };
 
     // invoke algorithem and find cat's next position
