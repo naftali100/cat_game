@@ -44,13 +44,10 @@ public:
     }
 
     Hex* findNextInPathToDest(const Hex* root) {
-        LOGI;
-        //TODO: catch exceptions
         Hex* temp = &m_dest;
         while (temp != nullptr && temp->getParent() != root)
             temp = temp->getParent();
 
-        LOGI;
         return temp;
     }
 
