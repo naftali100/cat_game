@@ -3,12 +3,13 @@
 #include "Log.h"
 #include <array>
 #include "Random.h"
+#include <utility>
 
 std::array<std::array<std::pair<int, int>, 6>, 2> arr{
     // odd
-    std::array<std::pair<int, int>, 6>{std::pair{+1, 0}, {+1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
+    std::array<std::pair<int, int>, 6>{std::pair<int, int>{+1, 0}, {+1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
     // even
-    std::array<std::pair<int, int>, 6>{std::pair{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}} };
+    std::array<std::pair<int, int>, 6>{std::pair<int, int>{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}} };
 
 sf::Vector2i oddr_offset_neighbor(int col, int row, int dir, int isEventRow) {
     auto diff = arr[isEventRow][dir];
