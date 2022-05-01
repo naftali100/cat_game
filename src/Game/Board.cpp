@@ -90,7 +90,7 @@ void Board::init(const int size, const int difficultLevel) {
         col = 0;
         row++;
     }
-Randomizer rnd;
+    Randomizer rnd;
     for (int i = 0; i < difficultLevel; i++) {
         auto& vec = m_board.at(rnd.rnd(0, m_board.size() -1));
         vec.at(rnd.rnd(0, vec.size() -1 )).block();
