@@ -27,7 +27,14 @@ public:
     }
 
     int score() {
-        return m_neighbors.size();
+        int res = 0;
+        for(auto n: m_neighbors){
+            res += !n->isBlocked();
+        }
+        return res;
+
+        // after we implement remove blocked neighbors from neighbors list
+        // return m_neighbors.size();
     };
 
     void setParent(Hex* parent) {
@@ -63,6 +70,7 @@ public:
 
     void block() {
         m_blocked = true;
+        // TODO: remove me from my neighbors (idk how)...
     }
 
     bool isBlocked() {
