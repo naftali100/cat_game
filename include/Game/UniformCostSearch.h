@@ -17,7 +17,7 @@ namespace UniformCostSearch {
             for (auto next : current->getNeighbors()) {
                 if (next->isBlocked() || next == start) continue;
                 int new_cost = current->costSoFar() + next->cost();
-                if (next->costSoFar() == 0 || new_cost < next->costSoFar()) {
+                if (next->getParent() == nullptr || new_cost < next->costSoFar()) {
                     next->setCostSoFar(new_cost);
                     frontier.put(next, new_cost);
                     next->setParent(current);

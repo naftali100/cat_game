@@ -53,7 +53,7 @@ public:
                 return;
             }
 
-            auto newCatPos = m_board.implementBFS(catHex);
+            auto newCatPos = m_board.implementUCS(catHex);
             if (newCatPos == nullptr) {
                 //TODO: do secondary strategy
                 LOGE << "can't find path (new pos found in nullptr)";
