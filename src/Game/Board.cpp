@@ -19,13 +19,14 @@ sf::Vector2i oddr_offset_neighbor(int col, int row, int dir, int isEventRow) {
 
 sf::Vector2i Board::getHexIndex(Hex* h) {
     int counterX = 0, counterY = 0;
-    for (auto vec : m_board) {
-        for (auto hex : vec) {
+    for (auto& vec : m_board) {
+        for (auto& hex : vec) {
             if (h == &hex) {
                 return { counterX, counterY };
             }
             counterY++;
         }
+        counterY = 0;
         counterX++;
     }
     return {};
@@ -101,10 +102,10 @@ void Board::init(const int size, const int difficultLevel) {
         col = 0;
         row++;
     }
-    Randomizer rnd;
+
     for (int i = 0; i < difficultLevel; i++) {
-        auto& vec = m_board.at(rnd.rnd(0, m_board.size() - 1));
-        auto& toBlock = vec.at(rnd.rnd(0, vec.size() - 1));
+        auto& vec = m_board.at(Random::rnd(0, m_board.size() - 1));
+        auto& toBlock = vec.at(Random::rnd(0, vec.size() - 1));
         if (&toBlock != getMiddle())
             toBlock.block();
         else

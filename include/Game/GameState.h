@@ -7,6 +7,7 @@
 #include "Cat.h"
 #include "Colors.h"
 #include "Log.h"
+#include "Random.h"
 #include "State.h"
 
 class GameState : public State {
@@ -14,7 +15,6 @@ public:
     using State::State;
     void init() {
         m_cat.setPosition(m_board.getMiddle()->getPosition());
-        srand(time(NULL));
     }
 
     virtual void handleEvent(const sf::Event& e) {
@@ -22,6 +22,7 @@ public:
             if (m_PlayerTurn) {
                 auto res = m_board.positionToHex({(float)e.mouseButton.x, (float)e.mouseButton.y});
                 if (res != nullptr && !res->isBlocked()) {
+                    m_clickCount++;
                     res->block();
                     m_PlayerTurn = false;
                     catMove();
@@ -34,6 +35,10 @@ public:
     virtual void draw(sf::RenderTarget& win) const override {
         m_board.draw(win);
         m_cat.draw(win);
+
+        sf::Text clicksText("number of clicks: " + std::to_string(m_clickCount), Resources::getFont(Fonts::Main));
+        clicksText.setFillColor(Colors::Black);
+        win.draw(clicksText);
     };
 
     // invoke algorithem and find cat's next position
@@ -41,26 +46,42 @@ public:
         auto catHex = m_board.positionToHex(m_cat.getPosition() + sf::Vector2f(10, 10));
         if (catHex) {
             auto n = catHex->getNeighbors();
-            for (auto correntHex : n) {
-                // if correntHex == board.m_dest -> gameover
+            for (auto nn : n) {
+                if (m_board.isOutside(nn)) {
+                    m_board.reset();
+                    m_PlayerTurn = true;
+                    m_cat.setPosition(m_board.getMiddle()->getPosition());
+                    m_clickCount = 0;
+                    return;
+                }
+            }
+            
+            // TODO: replace with score==0
+            bool isWon = true;
+            for(auto n: catHex->getNeighbors()){
+                if(!n->isBlocked()){
+                    isWon = false;
+                    break;
+                }
             }
 
-            bool isWon = catHex->score() == 0; // cat have no where to go
             if (isWon) {
                 m_board.reset();
                 m_PlayerTurn = true;
                 m_cat.setPosition(m_board.getMiddle()->getPosition());
+                m_clickCount = 0;
                 return;
             }
 
             auto newCatPos = m_board.implementUCS(catHex);
             if (newCatPos == nullptr) {
-                //TODO: do secondary strategy
-                LOGE << "can't find path (new pos found in nullptr)";
+                // random
+                do {
+                    int n = Random::rnd(0, catHex->getNeighbors().size() - 1);
+                    newCatPos = catHex->getNeighbors().at(n);
+                } while (newCatPos->isBlocked());
             }
-            else {
-                m_cat.setPosition(newCatPos->getPosition());
-            }
+            m_cat.setPosition(newCatPos->getPosition());
         }
         m_PlayerTurn = true;
     }

@@ -125,7 +125,7 @@ public:
     }
 
     unsigned int cost() {
-        unsigned int counter = 0;
+        unsigned int counter = 1;
         for (auto next : getNeighbors())
             if (next->isBlocked())
                 counter++;

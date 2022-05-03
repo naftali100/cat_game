@@ -12,7 +12,9 @@ namespace UniformCostSearch {
 
         while (!frontier.empty()) {
             T* current = frontier.get();
-            if (current == goal)    break;
+            if (current == goal) {
+                break; // ASK: not calculating goal cost?
+            }
 
             for (auto next : current->getNeighbors()) {
                 if (next->isBlocked() || next == start) continue;

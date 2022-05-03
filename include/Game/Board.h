@@ -68,6 +68,10 @@ public:
         return &vec.at(vec.size() / 2);
     }
 
+    bool isOutside(Hex* h){
+        return h == &m_dest;
+    }
+
 private:
     Hex m_dest; //the out of the board
     void init(const int size, const int difficultLevel);
