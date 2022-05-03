@@ -89,9 +89,9 @@ public:
 private:
     Cat m_cat;
     Board m_originalBoard;  // for reset level option
-    Board m_board;
+    Board m_board {11, Random::rnd(4, 11)};
     bool m_PlayerTurn = true;
-    int m_clickCount;
+    int m_clickCount = 0;
 };
 
 #endif
