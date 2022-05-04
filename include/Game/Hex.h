@@ -142,7 +142,6 @@ private:
     sf::Color m_color = Colors::LightGreen;
 
     sf::CircleShape m_shape{30, 6};
-
 };
 
 #endif
