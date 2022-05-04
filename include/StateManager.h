@@ -11,7 +11,8 @@ class StateManager {
 public:
     StateManager(sf::RenderWindow& win);
 
-    void pushState(StatePtr, bool = false);
+    void pushState(StatePtr);
+    void replaceState(StatePtr);
     void popState();
 
     void handleEvent(const sf::Event&);
@@ -20,12 +21,6 @@ public:
 
     void stop();
     bool isRunning() const;
-
-    // template <typename S>
-    // void registerState(States::ID state);
-
-    // StatePtr createState(States::ID);
-
     sf::RenderWindow& getWin() {
         return m_win;
     }
@@ -37,12 +32,6 @@ private:
     sf::RenderWindow& m_win;
     std::stack<StatePtr> m_states;
     bool m_paused = false;
-    // std::map<States::ID, std::function<StatePtr()>> m_factories;
 };
-
-// template <typename S>
-// void StateManager::registerState(States::ID state) {
-//     m_factories[state] = [this]() { return std::make_unique<S>(*this); };
-// }
 
 #endif
