@@ -1,7 +1,6 @@
 # New CMake versions map C++20 to /std:c++20 instead of c++latest, so <format>
 # and other unstable ABI features aren't supported. Use C++23 for such versions
 if (MSVC AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.21)
-    message(STATUS ===========================================================)
     set(CMAKE_CXX_STANDARD 23)
 else ()
     set(CMAKE_CXX_STANDARD 20)
