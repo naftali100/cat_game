@@ -6,18 +6,26 @@
 #include "Board.h"
 #include "Cat.h"
 #include "Colors.h"
+#include "Gui/button.h"
 #include "Log.h"
 #include "Random.h"
 #include "State.h"
+#include "Message.h"
 
 class GameState : public State {
 public:
     using State::State;
     void init() {
         m_cat.setPosition(m_board.getMiddle()->getPosition());
+        m_resetBtn.setPosition({100, 0});
+        m_resetBtn.setFunction([&](){
+            m_board.reset();
+        });
     }
 
     virtual void handleEvent(const sf::Event& e) {
+        m_resetBtn.handleEvent(e);
+
         if (e.type == sf::Event::MouseButtonReleased) {
             if (m_PlayerTurn) {
                 auto res = m_board.positionToHex({(float)e.mouseButton.x, (float)e.mouseButton.y});
@@ -31,7 +39,9 @@ public:
             }
         }
     };
-    virtual void update(const sf::Time&){};
+    virtual void update(const sf::Time&){
+        m_resetBtn.update();
+    };
     virtual void draw(sf::RenderTarget& win) const override {
         m_board.draw(win);
         m_cat.draw(win);
@@ -39,6 +49,8 @@ public:
         sf::Text clicksText("number of clicks: " + std::to_string(m_clickCount), Resources::getFont(Fonts::Main));
         clicksText.setFillColor(Colors::Black);
         win.draw(clicksText);
+        
+        m_resetBtn.draw(win);
     };
 
     // invoke algorithem and find cat's next position
@@ -48,6 +60,7 @@ public:
             auto n = catHex->getNeighbors();
             for (auto nn : n) {
                 if (m_board.isOutside(nn)) {
+                    m_stateManager.pushState(std::make_unique<Message>(m_stateManager, "ha ha. loser! :D"));
                     m_board.reset();
                     m_PlayerTurn = true;
                     m_cat.setPosition(m_board.getMiddle()->getPosition());
@@ -66,6 +79,7 @@ public:
             }
 
             if (isWon) {
+                m_stateManager.pushState(std::make_unique<Message>(m_stateManager, "you won"));
                 m_board.reset();
                 m_PlayerTurn = true;
                 m_cat.setPosition(m_board.getMiddle()->getPosition());
@@ -92,6 +106,9 @@ private:
     Board m_board {11, Random::rnd(4, 11)};
     bool m_PlayerTurn = true;
     int m_clickCount = 0;
+
+    gui::Button m_resetBtn{"reset"};
+    gui::Button m_undoBtn {"undo"};
 };
 
 #endif
