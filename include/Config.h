@@ -4,8 +4,8 @@
 
 // ==============================
 // settings
-#define WIN_SIZE_X 1200
-#define WIN_SIZE_Y 800
+#define WIN_SIZE_X 850
+#define WIN_SIZE_Y 700
 
 #define FPS 60
 

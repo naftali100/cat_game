@@ -6,22 +6,31 @@
 #include "Board.h"
 #include "Cat.h"
 #include "Colors.h"
+#include "Gui/button.h"
 #include "Log.h"
+#include "Random.h"
 #include "State.h"
+#include "Message.h"
 
 class GameState : public State {
 public:
     using State::State;
     void init() {
         m_cat.setPosition(m_board.getMiddle()->getPosition());
-        srand(time(NULL));
+        m_resetBtn.setPosition({100, 0});
+        m_resetBtn.setFunction([&](){
+            m_board.reset();
+        });
     }
 
     virtual void handleEvent(const sf::Event& e) {
+        m_resetBtn.handleEvent(e);
+
         if (e.type == sf::Event::MouseButtonReleased) {
             if (m_PlayerTurn) {
                 auto res = m_board.positionToHex({(float)e.mouseButton.x, (float)e.mouseButton.y});
                 if (res != nullptr && !res->isBlocked()) {
+                    m_clickCount++;
                     res->block();
                     m_PlayerTurn = false;
                     catMove();
@@ -30,10 +39,18 @@ public:
             }
         }
     };
-    virtual void update(const sf::Time&){};
+    virtual void update(const sf::Time&){
+        m_resetBtn.update();
+    };
     virtual void draw(sf::RenderTarget& win) const override {
         m_board.draw(win);
         m_cat.draw(win);
+
+        sf::Text clicksText("number of clicks: " + std::to_string(m_clickCount), Resources::getFont(Fonts::Main));
+        clicksText.setFillColor(Colors::Black);
+        win.draw(clicksText);
+        
+        m_resetBtn.draw(win);
     };
 
     // invoke algorithem and find cat's next position
@@ -41,26 +58,44 @@ public:
         auto catHex = m_board.positionToHex(m_cat.getPosition() + sf::Vector2f(10, 10));
         if (catHex) {
             auto n = catHex->getNeighbors();
-            for (auto correntHex : n) {
-                // if correntHex == board.m_dest -> gameover
+            for (auto nn : n) {
+                if (m_board.isOutside(nn)) {
+                    m_stateManager.pushState(std::make_unique<Message>(m_stateManager, "ha ha. loser! :D"));
+                    m_board.reset();
+                    m_PlayerTurn = true;
+                    m_cat.setPosition(m_board.getMiddle()->getPosition());
+                    m_clickCount = 0;
+                    return;
+                }
+            }
+            
+            // TODO: replace with score==0
+            bool isWon = true;
+            for(auto n: catHex->getNeighbors()){
+                if(!n->isBlocked()){
+                    isWon = false;
+                    break;
+                }
             }
 
-            bool isWon = catHex->score() == 0; // cat have no where to go
             if (isWon) {
+                m_stateManager.pushState(std::make_unique<Message>(m_stateManager, "you won"));
                 m_board.reset();
                 m_PlayerTurn = true;
                 m_cat.setPosition(m_board.getMiddle()->getPosition());
+                m_clickCount = 0;
                 return;
             }
 
             auto newCatPos = m_board.implementUCS(catHex);
             if (newCatPos == nullptr) {
-                //TODO: do secondary strategy
-                LOGE << "can't find path (new pos found in nullptr)";
+                // random
+                do {
+                    int n = Random::rnd(0, catHex->getNeighbors().size() - 1);
+                    newCatPos = catHex->getNeighbors().at(n);
+                } while (newCatPos->isBlocked());
             }
-            else {
-                m_cat.setPosition(newCatPos->getPosition());
-            }
+            m_cat.setPosition(newCatPos->getPosition());
         }
         m_PlayerTurn = true;
     }
@@ -68,9 +103,12 @@ public:
 private:
     Cat m_cat;
     Board m_originalBoard;  // for reset level option
-    Board m_board;
+    Board m_board {11, Random::rnd(4, 11)};
     bool m_PlayerTurn = true;
-    int m_clickCount;
+    int m_clickCount = 0;
+
+    gui::Button m_resetBtn{"reset"};
+    gui::Button m_undoBtn {"undo"};
 };
 
 #endif

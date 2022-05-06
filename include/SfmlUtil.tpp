@@ -138,15 +138,4 @@ Record& operator<<(Record& record, const V& v) {
     record << v.x << ", " << v.y;
     return record;
 }
-
-template <Iterateble I>
-Record& operator<<(Record& record, const I& i) {
-    for (const auto& item : i) {
-        if (item != *i.begin())
-            record << ", ";
-        record << item;
-    }
-    return record;
-}
-
 }  // namespace plog

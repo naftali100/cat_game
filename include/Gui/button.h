@@ -19,7 +19,9 @@ class Button : public BoundText {
 public:
     Button(const sf::String& text = "btn text") : BoundText(text, {}, Colors::White, Colors::Blue) {}
 
-    void setFunction(std::function<void(void)> func) {}
+    void setFunction(std::function<void(void)> func) {
+        m_cbFunction = func;
+    }
 
     void update() {
         if (m_isHovered) {
@@ -27,11 +29,6 @@ public:
         }
         else {
             m_background.setFillColor(Colors::Primary);
-        }
-
-        m_isClicked = m_isHovered && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
-        if (m_isClicked) {
-            m_background.setFillColor(Colors::DarkBlue);
         }
     }
 
@@ -41,11 +38,11 @@ public:
                 m_isHovered = m_background.getGlobalBounds().contains(e.mouseMove.x, e.mouseMove.y);
                 break;
             case sf::Event::MouseButtonReleased:
-                // TODO: finish and deside how to handle click
-                // m_isClicked = m_isHovered && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
                 if (m_isHovered) {
-                    // actually do click handle
+                    m_cbFunction();
                 }
+                break;
+            default:
                 break;
         }
     }

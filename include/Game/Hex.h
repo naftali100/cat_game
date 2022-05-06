@@ -125,7 +125,7 @@ public:
     }
 
     unsigned int cost() {
-        unsigned int counter = 0;
+        unsigned int counter = 1;
         for (auto next : getNeighbors())
             if (next->isBlocked())
                 counter++;
@@ -142,7 +142,6 @@ private:
     sf::Color m_color = Colors::LightGreen;
 
     sf::CircleShape m_shape{30, 6};
-
 };
 
 #endif

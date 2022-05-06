@@ -8,7 +8,7 @@
 
 #include "Config.h"
 #include "States/DemoState.h"
-#include "Game/GameState.h"
+#include "Game/Main.h"
 #include "SfmlUtil.h"
 #include "StateManager.h"
 #include "Resources.h"
@@ -31,7 +31,7 @@ void Game::run() {
     // m_win.setKeyRepeatEnabled(false);
 
     // initial state
-    m_stateManager.pushState(std::make_unique<GameState>(m_stateManager));
+    m_stateManager.pushState(std::make_unique<Main>(m_stateManager));
 
     sf::Clock clock;
     while (m_stateManager.isRunning()) {

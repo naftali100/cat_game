@@ -107,21 +107,12 @@ concept PrintableShape = requires(T t) {
     sf::util::getGlobalTopLeft(t);
 };
 
-template <typename T>
-concept Iterateble = requires(T t) {
-    std::begin(t);
-    std::end(t);
-};
-
 namespace plog {
     template <PrintableVec V>
     Record& operator<<(Record& record, const V& v);
 
     template <PrintableShape S>
     Record& operator<<(Record& record, const S& v);
-
-    template <Iterateble C>
-    Record& operator<<(Record& os, C const& c);
 }  // namespace plog
 
 #include "SfmlUtil.tpp"
