@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Hex.h"
+#include "MatrixIterator.h"
 #include "BFS.h"
 #include "UniformCostSearch.h"
 
@@ -79,21 +80,23 @@ private:
     void initForUCS();          //init the state of the Hexes
     std::vector<std::vector<Hex>> m_board;
 
-    //class BoardIterator {
-    //public:
-    //    BoardIterator(Board& board);
-    //    Hex& operator*();
-    //    BoardIterator operator++();
-    //    BoardIterator operator++(int dammy);
-    //    bool operator==(const BoardIterator& other);
-    //    bool operator!=(const BoardIterator& other);
 
-    //private:
-    //    Board& m_matrix;
-    //    std::vector<Hex>::iterator m_pointer;
-    //    //std::vector<int>::iterator i{};
-    //    
-    //};
+
+    class BoardIterator {
+    public:
+        BoardIterator(Board& board);
+        Hex& operator*();
+        BoardIterator operator++();
+        BoardIterator operator++(int dammy);
+        bool operator==(const BoardIterator& other);
+        bool operator!=(const BoardIterator& other);
+
+    private:
+        Board& m_board;
+        MatrixIterator<Hex> m_iterator;
+        
+    };
+
 };
 
 #endif

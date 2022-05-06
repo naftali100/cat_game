@@ -120,24 +120,34 @@ void Board::draw(sf::RenderTarget& win) const {
     m_dest.draw(win);
 }
 
-//Board::BoardIterator::BoardIterator(Board& board)
-//    :m_board(board), m_pointer(board.m_board.front().begin())
-//{
-//}
-//
-//Hex& Board::BoardIterator::operator*()
-//{
-//    if (m_pointer != m_board.fro
-//        return *m_pointer;
-//    else
-//        //TODO: throw exception
-//        throw;
-//}
-//
-//BoardIterator Board::BoardIterator::operator++()
-//{
-//    BoardIterator tes(*this);
-//    if (m_pointer)
-//        m_pointer++;
-//    return res;
-//}
+Board::BoardIterator::BoardIterator(Board& board)
+    :m_board(board), m_iterator(MatrixIterator<Hex>(m_board.m_board))
+{
+}
+
+Hex& Board::BoardIterator::operator*()
+{
+    if (m_iterator.isEnd())
+    {
+        exit(1); // TODO: throw
+        assert(0);
+    }
+    else
+        //TODO: throw exception
+        throw;
+}
+
+Board::BoardIterator Board::BoardIterator::operator++()
+{
+    if (m_iterator.isEnd())
+        assert(0); // TODO:
+    m_iterator++;
+    return Board::BoardIterator(*this);
+}
+
+Board::BoardIterator Board::BoardIterator::operator++(int dammy)
+{
+    BoardIterator res(*this);
+    operator++();
+    return res;
+}
