@@ -124,6 +124,11 @@ inline sf::Vector2f getGlobalCenter(const T& object) {
     const sf::FloatRect bounds{object.getGlobalBounds()};
     return {bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f};
 }
+template <typename T>
+inline sf::Vector2f getGlobalTopRight(const T& object) {
+    const sf::FloatRect bounds{object.getGlobalBounds()};
+    return {bounds.left + bounds.width, bounds.top};
+}
 }  // namespace util
 }  // namespace sf
 
