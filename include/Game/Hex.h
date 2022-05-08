@@ -8,12 +8,9 @@
 #include "Colors.h"
 #include "Log.h"
 
-
-
 // TODO: move SFML stuff away?
 class Hex : public sf::Transformable {
 public:
-
     enum class VisitedState
     {
         NOT_VISITED,
@@ -84,6 +81,9 @@ public:
         // TODO: remove me from my neighbors (idk how)...
     }
 
+    void unBlock(){
+        m_blocked = false;
+    }
     bool isBlocked() {
         return m_blocked;
     }
