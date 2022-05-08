@@ -20,6 +20,7 @@ class GameState : public State {
 public:
     using State::State;
     void init() {
+        m_originalBoard = m_board;
         m_cat.setPosition(m_board.getMiddle()->getPosition());
         m_resetBtn.setPosition({20, 50});
         m_resetBtn.setFunction([&](){
@@ -81,7 +82,7 @@ public:
             auto n = catHex->getNeighbors();
             for (auto nn : n) {
                 if (m_board.isOutside(nn)) {
-                    resetGame("ha ha. loser! :D");
+                    resetGame("ha ha. loser! :D", true);
                     return;
                 }
             }
@@ -96,7 +97,7 @@ public:
             }
 
             if (isWon) {
-                resetGame("you won!!!");
+                resetGame("you won!!!", false);
                 return;
             }
 
@@ -114,12 +115,19 @@ public:
     }
 
 private:
-    void resetGame(const std::string& message){
+    void resetGame(const std::string& message, bool fromOriginal){
         m_stateManager.pushState(std::make_unique<Message>(m_stateManager, message));
-        m_board.reset();
+        if(fromOriginal)
+            m_board = m_originalBoard;
+        else{
+            m_board.reset();
+            m_originalBoard = m_board;
+        }
         m_PlayerTurn = true;
         m_cat.setPosition(m_board.getMiddle()->getPosition());
         m_clickCount = 0;
+        while(!m_steps.empty()) 
+            m_steps.pop();
     }
 
 private:
