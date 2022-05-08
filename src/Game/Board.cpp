@@ -117,7 +117,6 @@ void Board::draw(sf::RenderTarget& win) const {
     for (auto& vec : m_board) {
         for (auto& hex : vec) { hex.draw(win); }
     }
-    m_dest.draw(win);
 }
 
 Board::BoardIterator::BoardIterator(Board& board)
