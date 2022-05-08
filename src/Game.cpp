@@ -2,14 +2,10 @@
 
 #include <plog/Log.h>
 
-#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <vector>
 
 #include "Config.h"
-#include "States/DemoState.h"
 #include "Game/Main.h"
-#include "SfmlUtil.h"
 #include "StateManager.h"
 #include "Resources.h"
 
@@ -17,9 +13,7 @@ Game::Game() : m_win(sf::VideoMode(WIN_SIZE_X, WIN_SIZE_Y), "World"), m_stateMan
 
 void Game::loadResources() {
     Resources::loadTexture(Textures::Cat, "textures/cat.png");
-    TextureHolder::Instance().load(Textures::Player, "textures/player.png");
     FontHolder::Instance().load(Fonts::Main, FONT_PATH);
-    SoundBufferHolder::Instance().load(SoundEffect::Main, "music/background.ogg");
 }
 
 void Game::run() {
@@ -28,7 +22,6 @@ void Game::run() {
     loadResources();
 
     m_win.setFramerateLimit(FPS);
-    // m_win.setKeyRepeatEnabled(false);
 
     // initial state
     m_stateManager.pushState(std::make_unique<Main>(m_stateManager));
@@ -36,9 +29,7 @@ void Game::run() {
     sf::Clock clock;
     while (m_stateManager.isRunning()) {
         processEvents();
-        sf::Time deltaTime = clock.restart();
-        update(deltaTime);
-        // showStatWin();
+        update(clock.restart());
         draw();
     }
 
@@ -77,19 +68,10 @@ void Game::update(sf::Time deltaTime) {
     m_stateManager.update(deltaTime);
 }
 
-void Game::showStatWin() {
-    // if (ImGui::Begin("stat window")) {
-    //     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate,
-    //                 ImGui::GetIO().Framerate);
-    // }
-    // ImGui::End();
-}
-
 void Game::draw() {
     LOGV << "game render - start";
     m_win.clear(sf::Color::White);
     m_stateManager.draw(m_win);
-    // ImGui::SFML::Render(m_win);
     m_win.display();
     LOGV << "game render - finish";
 }

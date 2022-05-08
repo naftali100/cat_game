@@ -2,12 +2,8 @@
 
 #include <plog/Log.h>
 
-// #include "state/demo_state.h"
-
 StateManager::StateManager(sf::RenderWindow& win) : m_win(win) {
     LOGV << "state manager constructor - start";
-    // registerState<DemoState>(States::Main);
-
     LOGV << "state manager constructor - finish";
 }
 
@@ -40,32 +36,6 @@ void StateManager::handleEvent(const sf::Event& e) {
 }
 
 void StateManager::update(const sf::Time& td) {
-    // ImGui::Begin("states");
-    // if (ImGui::Button("demo state")) {
-    //     pushState(createState(States::Main));
-    // }
-    // if (ImGui::Button("state 2")) {
-    //     pushState(createState(States::Demo2));
-    // }
-    // if (ImGui::Button("resources state")) {
-    //     pushState(createState(States::Resources), true);
-    // }
-    // if (ImGui::Button("collision state")) {
-    //     pushState(createState(States::Collision), true);
-    // }
-    // if (ImGui::Button("gui state")) {
-    //     pushState(createState(States::Gui));
-    // }
-
-    // if (ImGui::Button("exit current state")) {
-    //     popState();
-    // }
-
-    // if (ImGui::Button("exit")) {
-    //     while (!m_states.empty()) m_states.pop();
-    // }
-
-    // ImGui::End();
     if (m_paused)
         return;
 
@@ -104,10 +74,3 @@ void StateManager::stop() {
 bool StateManager::isRunning() const {
     return !m_states.empty();
 }
-
-// StatePtr StateManager::createState(States::ID stateID) {
-//     auto found = m_factories.find(stateID);
-//     assert(found != m_factories.end());
-
-//     return m_factories[stateID]();
-// }

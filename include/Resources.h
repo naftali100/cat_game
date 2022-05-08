@@ -22,13 +22,6 @@ void loadFont(const Fonts::ID id, const std::string& path) {
 sf::Font& getFont(const Fonts::ID id) {
     return FontHolder::Instance().get(id);
 }
-
-void loadSoundBuffer(const SoundEffect::ID id, const std::string& path) {
-    SoundBufferHolder::Instance().load(id, path);
-}
-sf::SoundBuffer& getSoundBuffer(const SoundEffect::ID id) {
-    return SoundBufferHolder::Instance().get(id);
-}
 };  // namespace Resources
 
 #endif
