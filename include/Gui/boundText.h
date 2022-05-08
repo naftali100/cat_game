@@ -18,8 +18,8 @@ public:
         m_bound_outline_color(bound_outline_color),
         m_bound_outline_size(bound_outline_size) {
         // setup rec
-        m_background.setCornerPointCount(10);
-        m_background.setCornersRadius(20);
+        m_background.setCornerPointCount(30);
+        m_background.setCornersRadius(15);
         m_background.setFillColor(m_bound_color);
         m_background.setOutlineColor(m_bound_outline_color);
         m_background.setOutlineThickness(m_bound_outline_size);
