@@ -3,6 +3,7 @@
 #define Hex_H
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include <vector>
 
 #include "Colors.h"
@@ -18,120 +19,43 @@ public:
         DONE
     };
 
-    void setCostSoFar(const unsigned int cost) {
-        m_costSoFar = cost;
-    }
+    /// both algorithms
 
-    void setNeighbors(const std::vector<Hex*>& neighbors) {
-        m_neighbors = neighbors;
-    }
+    void setParent(Hex* parent);
+    Hex* getParent();
 
-    void addNeighnor(Hex* h) {
-        m_neighbors.push_back(h);
-    }
+    /// bfs
 
-    int score() {
-        int res = 0;
-        for(auto n: m_neighbors){
-            res += !n->isBlocked();
-        }
-        return res;
+    void setInProgress();
+    void setDone();
+    void initVisitedState();
+    bool isVisited() const;
 
-        // after we implement remove blocked neighbors from neighbors list
-        // return m_neighbors.size();
-    };
 
-    void setParent(Hex* parent) {
-        m_BFSparent = parent;
-    }
+    /// ucs
+    
+    void setCostSoFar(const unsigned int cost);
+    int score();
+    unsigned int cost();
+    unsigned int costSoFar();
+    int getHeuristicCost(Hex* dest);
 
-    Hex* getParent() {
-        return m_BFSparent;
-    }
 
-    // void setBFSState(VisitedState state) {
-    //     m_BFSVisitedState = color;
-    // }
-    void setInProgress() {
-        m_BFSVisitedState = VisitedState::IN_PROGRESS;
-    }
+    /// sfml
 
-    void setDone() {
-        m_BFSVisitedState = VisitedState::DONE;
-    }
+    void setColor(const sf::Color c);
+    sf::FloatRect getGlobalBounds() const;
+    void draw(sf::RenderTarget& win) const;
 
-    void initVisitedState() {
-        m_BFSVisitedState = VisitedState::NOT_VISITED;
-    }
+    /// game
 
-    // void initParentForBFS() {
-    //     m_BFSparent = nullptr;
-    // }
+    void setNeighbors(const std::vector<Hex*>& neighbors);
+    void addNeighnor(Hex* h);
+    std::vector<Hex*> getNeighbors() const;
 
-    bool isVisited() const {
-        return m_BFSVisitedState != VisitedState::NOT_VISITED;
-    }
-
-    unsigned int costSoFar() {
-        return m_costSoFar;
-    }
-
-    void block() {
-        m_blocked = true;
-        // TODO: remove me from my neighbors (idk how)...
-    }
-
-    void unBlock(){
-        m_blocked = false;
-    }
-    bool isBlocked() {
-        return m_blocked;
-    }
-
-    void setColor(const sf::Color c) {
-        // if (m_color != Colors::DarkGreen)
-        m_color = c;
-    }
-
-    void draw(sf::RenderTarget& win) const {
-        auto color = m_blocked ? Colors::DarkGreen : m_color;
-        sf::CircleShape s = m_shape;
-        s.setFillColor(color);
-        // s.setOutlineThickness(1);
-        s.setOutlineColor(sf::Color::Red);
-        s.setPosition(getPosition());
-        win.draw(s);
-
-        if (m_BFSparent != nullptr) {
-            sf::VertexArray line(sf::Lines, 2);
-            line[0].position = sf::util::getGlobalCenter(*this);
-            line[1].position = sf::util::getGlobalCenter(*m_BFSparent);
-
-            line[0].color = Colors::Black;
-            line[1].color = Colors::LightOrange;
-
-            win.draw(line);
-        }
-    }
-
-    std::vector<Hex*> getNeighbors() const {
-        return m_neighbors;
-    }
-
-    sf::FloatRect getGlobalBounds() const {
-        sf::CircleShape c = m_shape;
-        c.setPosition(getPosition());
-        return c.getGlobalBounds();
-    }
-
-    unsigned int cost() {
-        unsigned int counter = 1;
-        for (auto next : getNeighbors())
-            if (next->isBlocked())
-                counter++;
-        //TODO: check what is whith m_dest
-        return counter;
-    }
+    void block();
+    void unBlock();
+    bool isBlocked();
 
 private:
     std::vector<Hex*> m_neighbors;

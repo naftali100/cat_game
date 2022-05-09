@@ -3,22 +3,21 @@
 #define CAR_H
 
 #include <SFML/Graphics.hpp>
+#include "Hex.h"
 
-#include "Resources.h"
-
-class Cat : public sf::Transformable {
+class Cat {
 public:
-    void draw(sf::RenderTarget& win) const {
-        sf::Sprite cat{Resources::getTexture(Textures::Cat)};
-        cat.scale(sf::Vector2f(0.09,0.09));
-        // cat.setOrigin(sf::util::getGlobalCenter(cat));
-        cat.setPosition(getPosition() + sf::Vector2f(10,0));
-        win.draw(cat);
+    void draw(sf::RenderTarget& win) const;
+    void setHex(Hex* h){
+        m_pos = h;
+    };
+
+    Hex* getHex(){
+        return m_pos;
     }
 private:
+    Hex* m_pos;
     sf::Sprite m_cat;
-    // sf::Vector2f m_position;
-
 };
 
 #endif

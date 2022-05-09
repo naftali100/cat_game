@@ -94,27 +94,6 @@ namespace sf {
     }  // namespace util
 }  // namespace sf
 
-template <typename T>
-concept PrintableVec = requires(T t) {
-    t.x;
-    t.y;
-};
-
-template <typename T>
-concept PrintableShape = requires(T t) {
-    t.getPosition();
-    t.getSize();
-    sf::util::getGlobalTopLeft(t);
-};
-
-namespace plog {
-    template <PrintableVec V>
-    Record& operator<<(Record& record, const V& v);
-
-    template <PrintableShape S>
-    Record& operator<<(Record& record, const S& v);
-}  // namespace plog
-
 #include "SfmlUtil.tpp"
 #else
 namespace sf {
@@ -131,12 +110,6 @@ inline sf::Vector2f getGlobalTopRight(const T& object) {
 }
 }  // namespace util
 }  // namespace sf
-
-namespace plog {
-inline Record& operator<<(Record& record, const sf::Vector2f& v) {
-    return record;
-}
-}  // namespace plog
 #endif // check for concepts
 
 #endif // include guards

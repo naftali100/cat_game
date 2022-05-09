@@ -9,19 +9,11 @@
 
 // easy and simplified resource management
 namespace Resources {
-void loadTexture(const Textures::ID id, const std::string& path) {
-    TextureHolder::Instance().load(id, path);
-}
-sf::Texture& getTexture(const Textures::ID id) {
-    return TextureHolder::Instance().get(id);
-}
+void loadTexture(const Textures::ID id, const std::string& path);
+sf::Texture& getTexture(const Textures::ID id);
 
-void loadFont(const Fonts::ID id, const std::string& path) {
-    FontHolder::Instance().load(id, path);
-}
-sf::Font& getFont(const Fonts::ID id) {
-    return FontHolder::Instance().get(id);
-}
+void loadFont(const Fonts::ID id, const std::string& path);
+sf::Font& getFont(const Fonts::ID id);
 };  // namespace Resources
 
 #endif

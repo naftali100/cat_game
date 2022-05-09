@@ -17,7 +17,7 @@ namespace UniformCostSearch {
             }
 
             for (auto next : current->getNeighbors()) {
-                if (next->isBlocked() || next == start) continue;
+                if (next->isBlocked() || next == start || next == nullptr) continue;
                 int new_cost = current->costSoFar() + next->cost();
                 if (next->getParent() == nullptr || new_cost < next->costSoFar()) {
                     next->setCostSoFar(new_cost);
