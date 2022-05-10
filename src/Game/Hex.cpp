@@ -90,6 +90,5 @@ unsigned int Hex::cost() {
     for (auto next : getNeighbors())
         if (next->isBlocked())
             counter++;
-    // TODO: check what is whith m_dest
     return counter;
 }
