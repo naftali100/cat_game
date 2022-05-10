@@ -1,11 +1,6 @@
 #include "StateManager.h"
 
-#include <plog/Log.h>
-
-StateManager::StateManager(sf::RenderWindow& win) : m_win(win) {
-    LOGV << "state manager constructor - start";
-    LOGV << "state manager constructor - finish";
-}
+StateManager::StateManager(sf::RenderWindow& win) : m_win(win) {}
 
 void StateManager::pushState(StatePtr ptr) {
     m_states.push(std::move(ptr));
@@ -30,9 +25,6 @@ void StateManager::handleEvent(const sf::Event& e) {
     if (!m_states.empty()) {
         m_states.top()->handleEvent(e);
     }
-    else {
-        LOGI << "empty states stack";
-    }
 }
 
 void StateManager::update(const sf::Time& td) {
@@ -42,9 +34,6 @@ void StateManager::update(const sf::Time& td) {
     if (!m_states.empty()) {
         m_states.top()->update(td);
     }
-    else {
-        LOGD << "empty states stack";
-    }
 }
 
 void StateManager::draw(sf::RenderTarget& win) {
@@ -53,9 +42,6 @@ void StateManager::draw(sf::RenderTarget& win) {
 
     if (!m_states.empty()) {
         m_states.top()->draw(win);
-    }
-    else {
-        LOGD << "empty states stack";
     }
 }
 

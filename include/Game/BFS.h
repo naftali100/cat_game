@@ -5,12 +5,6 @@
 #include <algorithm>
 #include <queue>
 #include "Hex.h"
-#include "Log.h"
-
-
-//TODO: replace this row after changing to template
-//typedef Hex Vertex;
-
 
 /*
 BFS requires:
@@ -18,7 +12,6 @@ init all vertexes to white
 setColor()
 setParent()
 isVisited()
-//TODO: change isVisited to if color == white
 */
 namespace BFS
 {

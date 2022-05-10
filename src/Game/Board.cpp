@@ -3,8 +3,8 @@
 #include <array>
 #include <utility>
 
-#include "Log.h"
 #include "Random.h"
+#include "SfmlUtil.h"
 
 std::array<std::array<std::pair<int, int>, 6>, 2> arr{
     // odd

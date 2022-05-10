@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "Colors.h"
-#include "Log.h"
 
 class Hex : public sf::Transformable {
 public:

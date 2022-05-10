@@ -3,7 +3,7 @@
 #include "StateManager.h"
 #include "Colors.h"
 #include "Resources.h"
-#include "Log.h"
+#include "SfmlUtil.h"
 
 void Message::update(const sf::Time& dt) {
     if (m_timeout < 0.1) {

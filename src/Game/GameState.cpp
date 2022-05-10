@@ -1,10 +1,12 @@
 #include "Game/GameState.h"
 
+#include <iostream>
+
 #include "Colors.h"
 #include "Game/BFS.h"
-#include "Log.h"
 #include "StateManager.h"
 #include "Game/Message.h"
+#include "SfmlUtil.h"
 
 
 void GameState::init() {
@@ -26,7 +28,7 @@ void GameState::init() {
             m_clickCount--;
         }
         else {
-            LOGE << "can't undo. step stack empty";
+            std::cerr << "can't undo. step stack empty";
         }
     });
 }

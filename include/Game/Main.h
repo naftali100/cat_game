@@ -9,6 +9,7 @@
 #include "Gui/button.h"
 #include "Resources.h"
 #include "State.h"
+#include "SfmlUtil.h"
 
 class Main : public State {
 public:

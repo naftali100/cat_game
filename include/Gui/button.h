@@ -1,7 +1,5 @@
 #pragma once
 
-#include <plog/Log.h>
-
 #include <SFML/Graphics.hpp>
 #include <functional>
 

@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#include <plog/Log.h>
 
 #include <SFML/Graphics.hpp>
 
@@ -17,8 +16,6 @@ void Game::loadResources() {
 }
 
 void Game::run() {
-    LOGV << "game::run - start";
-
     loadResources();
 
     m_win.setFramerateLimit(FPS);
@@ -32,8 +29,6 @@ void Game::run() {
         update(clock.restart());
         draw();
     }
-
-    LOGV << "game::run - finish";
 }
 
 void Game::processEvents() {
@@ -69,9 +64,7 @@ void Game::update(sf::Time deltaTime) {
 }
 
 void Game::draw() {
-    LOGV << "game render - start";
     m_win.clear(sf::Color::White);
     m_stateManager.draw(m_win);
     m_win.display();
-    LOGV << "game render - finish";
 }
