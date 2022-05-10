@@ -19,7 +19,6 @@ public:
         m_welcomeMessage.setPosition(sf::Vector2f(m_stateManager.getWin().getSize() / 2u));
         m_welcomeMessage.setFillColor(Colors::Green);
 
-        // m_startBtn.setOrigin(sf::util::getGlobalCenter(m_startBtn));
         m_startBtn.setPosition(m_welcomeMessage.getPosition() + sf::Vector2f(-m_startBtn.getGlobalBounds().width / 2, 50));
         m_startBtn.setFunction([&]() { m_stateManager.pushState(std::make_unique<GameState>(m_stateManager)); });
     }

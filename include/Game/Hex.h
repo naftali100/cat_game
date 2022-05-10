@@ -9,7 +9,6 @@
 #include "Colors.h"
 #include "Log.h"
 
-// TODO: move SFML stuff away?
 class Hex : public sf::Transformable {
 public:
     enum class VisitedState
@@ -31,7 +30,6 @@ public:
     void initVisitedState();
     bool isVisited() const;
 
-
     /// ucs
     
     void setCostSoFar(const unsigned int cost);
@@ -39,7 +37,6 @@ public:
     unsigned int cost();
     unsigned int costSoFar();
     int getHeuristicCost(Hex* dest);
-
 
     /// sfml
 

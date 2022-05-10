@@ -1,35 +1,21 @@
 #include "Game/Board.h"
 
-#include "Log.h"
 #include <array>
-#include "Random.h"
 #include <utility>
+
+#include "Log.h"
+#include "Random.h"
 
 std::array<std::array<std::pair<int, int>, 6>, 2> arr{
     // odd
     std::array<std::pair<int, int>, 6>{std::pair<int, int>{+1, 0}, {+1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
     // even
-    std::array<std::pair<int, int>, 6>{std::pair<int, int>{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}} };
+    std::array<std::pair<int, int>, 6>{std::pair<int, int>{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}}};
 
 sf::Vector2i oddr_offset_neighbor(int col, int row, int dir, int isEventRow) {
     auto diff = arr[isEventRow][dir];
-    sf::Vector2i res{ row + diff.second, col + diff.first };
+    sf::Vector2i res{row + diff.second, col + diff.first};
     return res;
-}
-
-sf::Vector2i Board::getHexIndex(Hex* h) {
-    int counterX = 0, counterY = 0;
-    for (auto& vec : m_board) {
-        for (auto& hex : vec) {
-            if (h == &hex) {
-                return { counterX, counterY };
-            }
-            counterY++;
-        }
-        counterY = 0;
-        counterX++;
-    }
-    return {};
 }
 
 std::vector<Hex*> Board::getNeighbors(int row, int col) {
@@ -39,17 +25,14 @@ std::vector<Hex*> Board::getNeighbors(int row, int col) {
         // if (ni.x > 0 && ni.y > 0 && ni.x < m_board.size() && ni.y < m_board.at(ni.x).size())
         try {
             res.push_back(&m_board.at(ni.x).at(ni.y));
-        }
-        catch (...) {}
+        } catch (...) {}
     }
     return res;
 }
 
-void Board::initForBFS()
-{
+void Board::initForBFS() {
     for (auto& row : m_board)
-        for (auto& hex : row)
-        {
+        for (auto& hex : row) {
             hex.initVisitedState();
             hex.setParent(nullptr);
         }
@@ -57,11 +40,9 @@ void Board::initForBFS()
     m_dest.setParent(nullptr);
 }
 
-void Board::initForUCS()
-{
+void Board::initForUCS() {
     for (auto& row : m_board)
-        for (auto& hex : row)
-        {
+        for (auto& hex : row) {
             hex.setCostSoFar(0);
             hex.setParent(nullptr);
         }
@@ -69,10 +50,10 @@ void Board::initForUCS()
 }
 
 void Board::init(const int size, const int difficultLevel) {
-    sf::Vector2f hexSize{ Hex().getGlobalBounds().width, Hex().getGlobalBounds().height };
+    sf::Vector2f hexSize{Hex().getGlobalBounds().width, Hex().getGlobalBounds().height};
     hexSize += {5, 5};
 
-    sf::Vector2f Startpos{ 100, 100 };
+    sf::Vector2f Startpos{100, 100};
     sf::Vector2f pos = Startpos;
 
     for (int i = 0; i < size; i++) {
@@ -119,34 +100,44 @@ void Board::draw(sf::RenderTarget& win) const {
     }
 }
 
-Board::BoardIterator::BoardIterator(Board& board)
-    :m_board(board), m_iterator(MatrixIterator<Hex>(m_board.m_board))
-{
+Hex* Board::implementBFS(Hex* root) {
+    initForBFS();
+    BFS::search(root, &m_dest);
+    return findNextInPathToDest(root);
 }
 
-Hex& Board::BoardIterator::operator*()
-{
-    if (m_iterator.isEnd())
-    {
-        exit(1); // TODO: throw
-        assert(0);
+Hex* Board::implementUCS(Hex* root) {
+    initForUCS();
+    UniformCostSearch::UCS(root, &m_dest);
+    return findNextInPathToDest(root);
+}
+
+// return nullptr if there is no path
+Hex* Board::findNextInPathToDest(const Hex* root) {
+    Hex* temp = &m_dest;
+    while (temp != nullptr && temp->getParent() != root) temp = temp->getParent();
+
+    return temp;
+}
+
+Hex* Board::getMiddle() {
+    auto& vec = m_board.at(m_board.size() / 2);
+    return &vec.at(vec.size() / 2);
+}
+
+bool Board::isOutside(Hex* h) {
+    return h == &m_dest;
+}
+
+Hex* Board::positionToHex(const sf::Vector2f& pos) {
+    for (auto& vec : m_board) {
+        for (auto& hex : vec) {
+            auto v = sf::util::getGlobalCenter(hex) - pos;
+            // ASK: constant 25
+            if (std::abs(v.x) < 25 && std::abs(v.y) < 25) {
+                return &hex;
+            }
+        }
     }
-    else
-        //TODO: throw exception
-        throw;
-}
-
-Board::BoardIterator Board::BoardIterator::operator++()
-{
-    if (m_iterator.isEnd())
-        assert(0); // TODO:
-    m_iterator++;
-    return Board::BoardIterator(*this);
-}
-
-Board::BoardIterator Board::BoardIterator::operator++(int dammy)
-{
-    BoardIterator res(*this);
-    operator++();
-    return res;
+    return nullptr;
 }
