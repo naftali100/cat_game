@@ -33,7 +33,6 @@ public:
     /// ucs
     
     void setCostSoFar(const unsigned int cost);
-    int score();
     unsigned int cost();
     unsigned int costSoFar();
     int getHeuristicCost(Hex* dest);

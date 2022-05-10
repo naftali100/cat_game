@@ -12,29 +12,6 @@ void Hex::addNeighnor(Hex* h) {
     m_neighbors.push_back(h);
 }
 
-int Hex::score() {
-    int res = 1;
-    // my and my father's neighbors
-    std::vector<Hex*> unique_neighbors;
-    LOGI << m_neighbors.size();
-
-    if (m_BFSparent != nullptr)
-        for (auto n : m_neighbors) {
-            if (std::find(m_BFSparent->getNeighbors().begin(), m_BFSparent->getNeighbors().end(), n) ==
-                m_BFSparent->getNeighbors().end())
-                unique_neighbors.push_back(n);
-        }
-    else {
-        unique_neighbors = m_neighbors;
-    }
-
-    for (auto n : unique_neighbors) { res += n->isBlocked(); }
-    return res;
-
-    // after we implement remove blocked neighbors from neighbors list
-    // return m_neighbors.size();
-};
-
 void Hex::setParent(Hex* parent) {
     m_BFSparent = parent;
 }

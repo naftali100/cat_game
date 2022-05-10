@@ -2,6 +2,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#define BOARD_SIZE 11
+
+#define LEVEL_MIN 4
+#define LEVEL_MAX 14
+
 // ==============================
 // settings
 #define WIN_SIZE_X 850

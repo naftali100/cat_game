@@ -8,6 +8,7 @@
 #include "Gui/button.h"
 #include "State.h"
 #include "Random.h"
+#include "Config.h"
 
 struct BoardState {
     Hex* hex;
@@ -34,7 +35,7 @@ private:
 private:
     Cat m_cat;
     Board m_originalBoard;  // for reset level option
-    Board m_board {11, Random::rnd(4, 11)};
+    Board m_board {BOARD_SIZE, Random::rnd(LEVEL_MIN, LEVEL_MAX)};
     bool m_PlayerTurn = true;
     int m_clickCount = 0;
 

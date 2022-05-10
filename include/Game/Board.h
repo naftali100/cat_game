@@ -7,11 +7,13 @@
 #include "Hex.h"
 #include "BFS.h"
 #include "UniformCostSearch.h"
+#include "Config.h"
+#include "Random.h"
 
 class Board {
 public:
     Board() {
-        init(11, 10);
+        init(BOARD_SIZE, Random::rnd(LEVEL_MIN, LEVEL_MAX));
     }
 
     Board(const int size, const int difficultLevel) {
@@ -20,7 +22,7 @@ public:
 
     void reset() {
         m_board.clear();
-        init(11, 10);
+        init(BOARD_SIZE, Random::rnd(LEVEL_MIN, LEVEL_MAX));
     }
     void draw(sf::RenderTarget& target) const;
     std::vector<Hex*> getNeighbors(int col, int row);
@@ -35,10 +37,12 @@ public:
      Hex* positionToHex(const sf::Vector2f& pos);
 
 private:
-    Hex m_dest; //the out of the board
     void init(const int size, const int difficultLevel);
     void initForBFS();          //init the state of the Hexes
     void initForUCS();          //init the state of the Hexes
+
+private:
+    Hex m_dest; //the out of the board
     std::vector<std::vector<Hex>> m_board;
 };
 
