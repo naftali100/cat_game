@@ -2,6 +2,8 @@
 
 //taken from https://www.redblobgames.com/pathfinding/a-star/implementation.html#cpp-dijkstra
 
+#include <queue>
+
 template<typename T, typename priority_t>
 class PriorityQueue {
     typedef std::pair<priority_t, T*> PQElement;

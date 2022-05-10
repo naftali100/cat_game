@@ -20,22 +20,6 @@ Hex* Hex::getParent() {
     return m_BFSparent;
 }
 
-void Hex::setInProgress() {
-    m_BFSVisitedState = VisitedState::IN_PROGRESS;
-}
-
-void Hex::setDone() {
-    m_BFSVisitedState = VisitedState::DONE;
-}
-
-void Hex::initVisitedState() {
-    m_BFSVisitedState = VisitedState::NOT_VISITED;
-}
-
-bool Hex::isVisited() const {
-    return m_BFSVisitedState != VisitedState::NOT_VISITED;
-}
-
 unsigned int Hex::costSoFar() {
     return m_costSoFar;
 }

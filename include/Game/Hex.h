@@ -10,24 +10,10 @@
 
 class Hex : public sf::Transformable {
 public:
-    enum class VisitedState
-    {
-        NOT_VISITED,
-        IN_PROGRESS,
-        DONE
-    };
-
-    /// both algorithms
+    /// algorithms
 
     void setParent(Hex* parent);
     Hex* getParent();
-
-    /// bfs
-
-    void setInProgress();
-    void setDone();
-    void initVisitedState();
-    bool isVisited() const;
 
     /// ucs
     
@@ -56,7 +42,6 @@ private:
     std::vector<Hex*> m_neighbors;
     Hex* m_BFSparent = nullptr;
     unsigned int m_costSoFar = 0;
-    VisitedState m_BFSVisitedState = VisitedState::NOT_VISITED;
     bool m_blocked = false;
     sf::Color m_color = Colors::LightGreen;
 

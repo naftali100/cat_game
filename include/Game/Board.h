@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "Hex.h"
-#include "BFS.h"
 #include "UniformCostSearch.h"
 #include "Config.h"
 #include "Random.h"
@@ -26,7 +25,6 @@ public:
     }
     void draw(sf::RenderTarget& target) const;
     std::vector<Hex*> getNeighbors(int col, int row);
-    Hex* implementBFS(Hex* root);
     Hex* implementUCS(Hex* root);
 
     //return nullptr if there is no path
@@ -38,7 +36,6 @@ public:
 
 private:
     void init(const int size, const int difficultLevel);
-    void initForBFS();          //init the state of the Hexes
     void initForUCS();          //init the state of the Hexes
 
 private:

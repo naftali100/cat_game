@@ -30,16 +30,6 @@ std::vector<Hex*> Board::getNeighbors(int row, int col) {
     return res;
 }
 
-void Board::initForBFS() {
-    for (auto& row : m_board)
-        for (auto& hex : row) {
-            hex.initVisitedState();
-            hex.setParent(nullptr);
-        }
-    m_dest.initVisitedState();
-    m_dest.setParent(nullptr);
-}
-
 void Board::initForUCS() {
     for (auto& row : m_board)
         for (auto& hex : row) {
@@ -98,12 +88,6 @@ void Board::draw(sf::RenderTarget& win) const {
     for (auto& vec : m_board) {
         for (auto& hex : vec) { hex.draw(win); }
     }
-}
-
-Hex* Board::implementBFS(Hex* root) {
-    initForBFS();
-    BFS::search(root, &m_dest);
-    return findNextInPathToDest(root);
 }
 
 Hex* Board::implementUCS(Hex* root) {

@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "Colors.h"
-#include "Game/BFS.h"
 #include "StateManager.h"
 #include "Game/Message.h"
 #include "SfmlUtil.h"
